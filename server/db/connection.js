@@ -14,11 +14,11 @@ try {
   await client.connect();
   // Send a ping to confirm a successful connection
   await client.db("admin").command({ ping: 1 });
-  console.log("ou successfully connected to MongoDB!");
+  console.log("Successfully connected to MongoDB!");
 } catch (err) {
   console.error(err);
 }
 
-let db = client.db("employees");
+let db = client.db("Sales");
 
 export default db;

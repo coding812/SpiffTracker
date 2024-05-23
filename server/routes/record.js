@@ -32,9 +32,15 @@ router.get("/:id", async (req, res) => {
 router.post("/", async (req, res) => {
   try {
     let newDocument = {
-      name: req.body.name,
-      position: req.body.position,
-      level: req.body.level,
+      employee_name: req.body.employee_name,
+      company_id: req.body.company_id,
+      date_of_sale: req.body.date_of_sale,
+      job_completed: req.body.job_completed,
+      customer_name: req.body.customer_name,
+      work_order: req.body.work_order,
+      sale_description: req.body.sale_description,
+      sale_amount: req.body.sale_amount,
+      expected_commission: req.body.expected_commission,
     };
     let collection = await db.collection("records");
     let result = await collection.insertOne(newDocument);
@@ -51,9 +57,15 @@ router.patch("/:id", async (req, res) => {
     const query = { _id: new ObjectId(req.params.id) };
     const updates = {
       $set: {
-        name: req.body.name,
-        position: req.body.position,
-        level: req.body.level,
+        employee_name: req.body.employee_name,
+        company_id: req.body.company_id,
+        date_of_sale: req.body.date_of_sale,
+        job_completed: req.body.job_completed,
+        customer_name: req.body.customer_name,
+        work_order: req.body.work_order,
+        sale_description: req.body.sale_description,
+        sale_amount: req.body.sale_amount,
+        expected_commission: req.body.expected_commission,
       },
     };
 
