@@ -11,10 +11,11 @@ import { ObjectId } from "mongodb";
 // The router will be added as a middleware and will take control of requests starting with path /record.
 const router = express.Router();
 
-// This section will help you get a list of all the records
+// This section will help you get a list of all the records with specific company_id
 router.get("/", async (req, res) => {
   let collection = await db.collection("records");
-  let results = await collection.find({}).toArray();
+  let query = { company_id: req.query.company_id };
+  let results = await collection.find(query).toArray();
   res.send(results).status(200);
 });
 
@@ -30,7 +31,6 @@ router.get("/:id", async (req, res) => {
 
 // This section will help you create a new record.
 router.post("/", async (req, res) => {
-  console.log("POST");
   try {
     let newDocument = {
       employee_name: req.body.employee_name,
