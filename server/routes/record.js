@@ -16,6 +16,7 @@ router.get("/", async (req, res) => {
   let collection = await db.collection("records");
   let query = { company_id: req.query.company_id };
   let results = await collection.find(query).toArray();
+  // console.table(results);
   res.send(results).status(200);
 });
 

@@ -1,12 +1,9 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom/client";
-import {
-  createBrowserRouter,
-  RouterProvider,
-} from "react-router-dom";
+import {createBrowserRouter,RouterProvider,} from "react-router-dom";
 import App from "./App";
 import Record from "./components/Record";
-import RecordList from "./components/RecordList";
+import AdminPanel from "./components/AdminPanel";
 import "./index.css";
 
 const router = createBrowserRouter([
@@ -16,12 +13,22 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <RecordList />,
+        element: <Record />,
       },
     ],
   },
   {
-    path: "/create",
+    path: "/admin",
+    element: <App />,
+    children: [
+      {
+        path: "/admin",
+        element: <AdminPanel />,
+      },
+    ],
+  },
+  {
+      path: "/create",
     element: <App />,
     children: [
       {
