@@ -1,9 +1,11 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom/client";
-import {createBrowserRouter,RouterProvider,} from "react-router-dom";
+import {createBrowserRouter,RouterProvider} from "react-router-dom";
 import App from "./App";
 import Record from "./components/Record";
 import AdminPanel from "./components/AdminPanel";
+import Login from "./components/Login";
+import Register from "./components/Register";
 import "./index.css";
 
 const router = createBrowserRouter([
@@ -44,6 +46,26 @@ const router = createBrowserRouter([
       {
         path: "/edit/:id",
         element: <Record />,
+      },
+    ],
+  },
+  {
+    path: "/login",
+    element: <App />,
+    children: [
+      {
+        path: "/login",
+        element: <Login />,
+      },
+    ],
+  },
+  {
+    path: "/register",
+    element: <App />,
+    children: [
+      {
+        path: "/register",
+        element: <Register />,
       },
     ],
   },

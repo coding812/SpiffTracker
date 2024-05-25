@@ -3,14 +3,11 @@ import express from "express";
 // Importing the MongoDB connection from the connection file
 import db from "../db/connection.js";
 
-// This help convert the id from string to ObjectId for the _id.
 import { ObjectId } from "mongodb";
 
-// router is an instance of the express router.
-// We use it to define our routes.
-// The router will be added as a middleware and will take control of requests starting with path /record.
 const router = express.Router();
 
+//////// BEGIN SALES ROUTES ////////
 // This section will help you get a list of all the records with specific company_id
 router.get("/", async (req, res) => {
   let collection = await db.collection("records");
@@ -55,6 +52,7 @@ router.post("/", async (req, res) => {
     res.status(500).send("Error adding record");
   }
 });
+
 
 // This section will help you update a record by id.
 router.patch("/:id", async (req, res) => {
@@ -101,6 +99,47 @@ router.delete("/:id", async (req, res) => {
   {
     console.error(err);
     res.status(500).send("Error deleting record");
+  }
+});
+
+//////// END SALES ROUTES ////////
+//////// BEGIN USER/MANAGER ROUTES ////////
+
+// Login route
+router.post("/login", async (req, res) => {
+  try {
+    let collection = await db.collection("users");
+    let query = { username: req.body.username, password: req.body.password };
+    let result = await collection.findOne(query);
+    if (!result) res.send("Not found").status(404);
+    else res.send(result).status(200);
+  } 
+  catch (err) 
+  {
+    console.error(err);
+    res.status(500).send("Error logging in");
+  }
+});
+
+// Register route
+router.post("/register", async (req, res) => {
+  try {
+    let newDocument = {
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      email: req.body.email,
+      password: req.body.password,
+      companyId: req.body.companyId,
+    };
+    let collection = await db.collection("users");
+    let result = await collection.insertOne(newDocument);
+    console.table(newDocument);
+    res.send(result).status(204);
+  } 
+  catch (err) 
+  {
+    console.error(err);
+    res.status(500).send("Error registering user");
   }
 });
 
