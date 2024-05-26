@@ -1,16 +1,11 @@
 import express from "express";
-
-// Importing the MongoDB connection from the connection file
 import db from "../db/connection.js";
-
 import { ObjectId } from "mongodb";
-
 const router = express.Router();
 
-//////// BEGIN SALES ROUTES ////////
 // This section will help you get a list of all the records with specific company_id
 router.get("/", async (req, res) => {
-  let collection = await db.collection("records");
+  let collection = db.collection("records");
   let query = { company_id: req.query.company_id };
   let results = await collection.find(query).toArray();
   // console.table(results);
@@ -19,7 +14,7 @@ router.get("/", async (req, res) => {
 
 // This section will help you get a single record by id
 router.get("/:id", async (req, res) => {
-  let collection = await db.collection("records");
+  let collection = db.collection("records");
   let query = { _id: new ObjectId(req.params.id) };
   let result = await collection.findOne(query);
 
@@ -41,7 +36,7 @@ router.post("/", async (req, res) => {
       sale_amount: req.body.sale_amount,
       expected_commission: req.body.expected_commission,
     };
-    let collection = await db.collection("records");
+    let collection = db.collection("records");
     let result = await collection.insertOne(newDocument);
     console.table(newDocument);
     res.send(result).status(204);
@@ -52,7 +47,6 @@ router.post("/", async (req, res) => {
     res.status(500).send("Error adding record");
   }
 });
-
 
 // This section will help you update a record by id.
 router.patch("/:id", async (req, res) => {
@@ -72,7 +66,7 @@ router.patch("/:id", async (req, res) => {
       },
     };
 
-    let collection = await db.collection("records");
+    let collection = db.collection("records");
     let result = await collection.updateOne(query, updates);
     let updatedRecord = Object.entries(updates['$set']).map(([key, value]) => ({Property: key, Value: value}));
     console.table(updatedRecord);
@@ -99,47 +93,6 @@ router.delete("/:id", async (req, res) => {
   {
     console.error(err);
     res.status(500).send("Error deleting record");
-  }
-});
-
-//////// END SALES ROUTES ////////
-//////// BEGIN USER/MANAGER ROUTES ////////
-
-// Login route
-router.post("/login", async (req, res) => {
-  try {
-    let collection = await db.collection("users");
-    let query = { username: req.body.username, password: req.body.password };
-    let result = await collection.findOne(query);
-    if (!result) res.send("Not found").status(404);
-    else res.send(result).status(200);
-  } 
-  catch (err) 
-  {
-    console.error(err);
-    res.status(500).send("Error logging in");
-  }
-});
-
-// Register route
-router.post("/register", async (req, res) => {
-  try {
-    let newDocument = {
-      firstName: req.body.firstName,
-      lastName: req.body.lastName,
-      email: req.body.email,
-      password: req.body.password,
-      companyId: req.body.companyId,
-    };
-    let collection = await db.collection("users");
-    let result = await collection.insertOne(newDocument);
-    console.table(newDocument);
-    res.send(result).status(204);
-  } 
-  catch (err) 
-  {
-    console.error(err);
-    res.status(500).send("Error registering user");
   }
 });
 

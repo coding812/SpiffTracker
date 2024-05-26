@@ -105,7 +105,7 @@ const Register = () => {
                 </div>
                 <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
                     <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-                        <form className="space-y-6" action="#" method="POST">
+                        <form className="space-y-6" action="#" method="POST" onSubmit={onSubmit}>
                             <div>
                                 <label htmlFor="first-name" className="block text-sm font-medium leading-6 text-gray-900">
                                     First name
