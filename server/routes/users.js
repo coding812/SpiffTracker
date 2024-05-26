@@ -1,9 +1,10 @@
 import express from "express";
-
-// Importing the MongoDB connection from the connection file
 import db from "../db/connection.js";
+import { ObjectId } from "mongodb";
 
-import { CURSOR_FLAGS, ObjectId } from "mongodb";
+import bcrypt from "bcrypt";
+const saltRounds = 10;
+
 
 const router = express.Router();
 
@@ -11,17 +12,22 @@ const router = express.Router();
 router.post("/login", async (req, res) => {
     try {
         let collection = db.collection("users");
-        let query = { email: req.body.email, password: req.body.password };
+        let user = await collection.findOne({ email: req.body.email });
         console.log(`Attempting to find user with email: ${req.body.email}`);
-        let result = await collection.findOne(query);
-        if (!result) {
+
+        if (!user) {
             res.send("Not found").status(404)
             console.log(`User with email ${req.body.email} not found`);
         }
-        else {
-            res.send(result).status(200)
-            console.log(`User with email ${req.body.email} found, successfully logged in`);
+
+        let passwordMatch = await bcrypt.compare(req.body.password, user.password);
+
+        if (!passwordMatch) {
+            res.send("Invalid password").status(401)
+            console.log(`User with email ${req.body.email} found, but password is incorrect`);
         };
+        res.send(user).status(200)
+        console.log(`User with email ${req.body.email} found, successfully logged in`);
     }
     catch (err) {
         console.error(err);
@@ -38,7 +44,7 @@ router.post("/register", async (req, res) =>
             firstName: req.body.firstName,
             lastName: req.body.lastName,
             email: req.body.email,
-            password: req.body.password,
+            password: bcrypt.hashSync(req.body.password, saltRounds),
             companyId: req.body.companyId,
         };
         let collection = db.collection("users");
