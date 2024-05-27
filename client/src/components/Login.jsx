@@ -1,15 +1,39 @@
+import { useState, useEffect } from 'react';
+import { useParams, useNavigate } from "react-router-dom";
+
+
 const Login = () => {
+  const [companyId, setCompanyId] = useState('');
+  const navigate = useNavigate();
 
-    return (
-        <>
-      {/*
-        This example requires updating your template:
+  async function onSubmit(e) {
+    e.preventDefault();
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    const response = await fetch('http://localhost:5050/users/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email, password }),
+    });
 
-        ```
-        <html class="h-full bg-white">
-        <body class="h-full">
-        ```
-      */}
+    const data = await response.json();
+    
+    if (response.ok) {
+      // localStorage.setItem('user', JSON.stringify(data));
+      setCompanyId(data.companyId);
+      console.log(data.companyId)
+      navigate('/admin', { state: { companyId: data.companyId } });
+      
+    }
+  }
+
+
+
+
+  return (
+    <>
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
@@ -18,7 +42,7 @@ const Login = () => {
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form className="space-y-6" action="#" method="POST">
+          <form className="space-y-6" action="#" method="POST" onSubmit={onSubmit}>
             <div>
               <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
                 Email address
@@ -77,7 +101,7 @@ const Login = () => {
         </div>
       </div>
     </>
-    );
+  );
 
 };
 

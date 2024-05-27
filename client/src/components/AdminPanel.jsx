@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 
 const Record = (props) => (
   <tr className="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
@@ -47,14 +47,19 @@ const Record = (props) => (
 
 export default function RecordList() {
   const [records, setRecords] = useState([]);
-
+  const location = useLocation();
+  const companyId = location.state.companyId;
+  
   // This method fetches the records from the database.
   useEffect(() => {
     async function getRecords() {
-      const response = await fetch(`http://localhost:5050/record/?company_id=123`);
+      console.log(companyId);
+      const response = await fetch(`http://localhost:5050/record?companyId=${companyId}`);
+      console.log(response);
       if (!response.ok) {
         const message = `An error occurred: ${response.statusText}`;
         console.error(message);
+        response.text().then(console.log);
         return;
       }
       const records = await response.json();
@@ -62,8 +67,7 @@ export default function RecordList() {
       setRecords(records);
     }
     getRecords();
-    return;
-  }, [records.length]);
+  }, [companyId]);
 
   // This method will delete a record
   async function deleteRecord(id) {

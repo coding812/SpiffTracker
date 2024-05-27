@@ -16,15 +16,15 @@ router.post("/login", async (req, res) => {
         console.log(`Attempting to find user with email: ${req.body.email}`);
 
         if (!user) {
-            res.send("Not found").status(404)
             console.log(`User with email ${req.body.email} not found`);
+            return res.send("Not found").status(404)
         }
 
         let passwordMatch = await bcrypt.compare(req.body.password, user.password);
 
         if (!passwordMatch) {
-            res.send("Invalid password").status(401)
             console.log(`User with email ${req.body.email} found, but password is incorrect`);
+            return res.send("Invalid password").status(401)
         };
         res.send(user).status(200)
         console.log(`User with email ${req.body.email} found, successfully logged in`);
