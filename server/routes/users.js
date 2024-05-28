@@ -1,11 +1,13 @@
 import express from "express";
+import jwt from 'jsonwebtoken'
+import dotenv from 'dotenv'
 import db from "../db/connection.js";
 import { ObjectId } from "mongodb";
 
 import bcrypt from "bcrypt";
 const saltRounds = 10;
 
-
+dotenv.config();
 const router = express.Router();
 
 // Login route
@@ -26,7 +28,8 @@ router.post("/login", async (req, res) => {
             console.log(`User with email ${req.body.email} found, but password is incorrect`);
             return res.send("Invalid password").status(401)
         };
-        res.send(user).status(200)
+        const accessToken = jwt.sign(user, process.env.JWT_SECRET, {expiresIn: "3hrs"})
+        res.status(200).send({user, accessToken})
         console.log(`User with email ${req.body.email} found, successfully logged in`);
     }
     catch (err) {

@@ -10,6 +10,7 @@ const Login = () => {
     e.preventDefault();
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
+
     const response = await fetch('http://localhost:5050/users/login', {
       method: 'POST',
       headers: {
@@ -21,10 +22,11 @@ const Login = () => {
     const data = await response.json();
     
     if (response.ok) {
-      // localStorage.setItem('user', JSON.stringify(data));
       setCompanyId(data.companyId);
-      console.log(data.companyId)
-      navigate('/admin', { state: { companyId: data.companyId } });
+      response => response.json();
+      data => localStorage.setItem('accessToken', data.accessToken)
+      console.log(data.user.companyId)
+      navigate('/admin', { state: { companyId: data.user.companyId } });
       
     }
   }
