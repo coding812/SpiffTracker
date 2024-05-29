@@ -7,7 +7,7 @@ const Register = () => {
         lastName: "",
         email: "",
         password: "",
-        company_id: "",
+        companyId: "",
     });
     const [isNew, setIsNew] = useState(true);
     const params = useParams();
@@ -15,7 +15,7 @@ const Register = () => {
 
     useEffect(() => {
         if (params.id) {
-            fetch(`http://localhost:5050/record/${params.id}`)
+            fetch(`http://localhost:5050/user/register/${params.id}`)
                 .then((res) => res.json())
                 .then((data) => {
                     setForm(data);
@@ -34,12 +34,12 @@ const Register = () => {
     // This function will handle the submission.
     async function onSubmit(e) {
         e.preventDefault();
+
         const user = { ...form };
         try {
             let response;
             if (isNew) {
-                // if we are adding a new record we will POST to /record.
-                response = await fetch("http://localhost:5050/register", {
+                response = await fetch("http://localhost:5050/users/register", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
@@ -49,7 +49,7 @@ const Register = () => {
 
                 if (response.ok) {
                     // Record added successfully
-                    navigate("/");
+                    navigate("/admin");
                 } else {
                     const data = await response.json();
                     if (data.error === "Email already exists") {
@@ -89,7 +89,7 @@ const Register = () => {
                 lastName: "",
                 email: "",
                 password: "",
-                company_id: "",
+                companyId: "",
             });
             navigate("/");
         }
@@ -115,7 +115,8 @@ const Register = () => {
                                         id="first-name"
                                         name="first-name"
                                         type="text"
-                                        autoComplete="given-name"
+                                        value={form.firstName}
+                                        onChange={(e) => updateForm({ firstName: e.target.value })}
                                         required
                                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                     />
@@ -130,7 +131,8 @@ const Register = () => {
                                         id="last-name"
                                         name="last-name"
                                         type="text"
-                                        autoComplete="given-name"
+                                        value={form.lastName}
+                                        onChange={(e) => updateForm({ lastName: e.target.value })}
                                         required
                                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                     />
@@ -145,7 +147,8 @@ const Register = () => {
                                         id="email"
                                         name="email"
                                         type="email"
-                                        autoComplete="email"
+                                        value={form.email}
+                                        onChange={(e) => updateForm({ email: e.target.value })}
                                         required
                                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                     />
@@ -163,7 +166,8 @@ const Register = () => {
                                         id="password"
                                         name="password"
                                         type="password"
-                                        autoComplete="current-password"
+                                        value={form.password}
+                                        onChange={(e) => updateForm({ password: e.target.value })}
                                         required
                                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                     />
@@ -180,7 +184,8 @@ const Register = () => {
                                         id="password"
                                         name="password"
                                         type="password"
-                                        autoComplete="current-password"
+                                        value={form.password2}
+                                        onChange={(e) => updateForm({ password2: e.target.value })}
                                         required
                                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                     />
@@ -200,7 +205,8 @@ const Register = () => {
                                         id="company-id"
                                         name="company-id"
                                         type="text"
-                                        autoComplete="current-password"
+                                        value={form.companyId}
+                                        onChange={(e) => updateForm({ companyId: e.target.value })}
                                         required
                                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                     />

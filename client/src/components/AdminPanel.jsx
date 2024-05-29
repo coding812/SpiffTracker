@@ -53,13 +53,18 @@ export default function RecordList() {
   // This method fetches the records from the database.
   useEffect(() => {
     async function getRecords() {
-      console.log(companyId);
-      const response = await fetch(`http://localhost:5050/record?companyId=${companyId}`);
-      console.log(response);
+      const response = await fetch(`http://localhost:5050/record?companyId=${companyId}`,{
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${localStorage.getItem('accessToken')}`,
+        },
+      }
+      );
       if (!response.ok) {
         const message = `An error occurred: ${response.statusText}`;
         console.error(message);
-        response.text().then(console.log);
+        response.text().then("AdminPanel.js line 67",console.log);
         return;
       }
       const records = await response.json();
@@ -73,6 +78,10 @@ export default function RecordList() {
   async function deleteRecord(id) {
     await fetch(`http://localhost:5050/record/${id}`, {
       method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${localStorage.getItem('accessToken')}`,
+      },
     });
     const newRecords = records.filter((el) => el._id !== id);
     setRecords(newRecords);

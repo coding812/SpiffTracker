@@ -23,11 +23,8 @@ const Login = () => {
     
     if (response.ok) {
       setCompanyId(data.companyId);
-      response => response.json();
-      data => localStorage.setItem('accessToken', data.accessToken)
-      console.log(data.user.companyId)
+      localStorage.setItem('accessToken', data.accessToken)
       navigate('/admin', { state: { companyId: data.user.companyId } });
-      
     }
   }
 

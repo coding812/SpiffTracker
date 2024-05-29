@@ -1,10 +1,11 @@
 import express from "express";
 import db from "../db/connection.js";
 import { ObjectId } from "mongodb";
+import authenticateToken from "./authenticate.js";
 const router = express.Router();
 
 // This section will help you get a list of all the records with specific company_id
-router.get("/", async (req, res) => {
+router.get("/", authenticateToken, async (req, res) => {
   if (!req.query.companyId) {
     res.status(400).send("Please provide a company id");
     return;
@@ -46,7 +47,7 @@ router.post("/", async (req, res) => {
 });
 
 // This section will help you update a record by id.
-router.patch("/:id", async (req, res) => {
+router.patch("/:id", authenticateToken, async (req, res) => {
   try {
     const query = { _id: new ObjectId(req.params.id) };
     const updates = {
@@ -77,7 +78,7 @@ router.patch("/:id", async (req, res) => {
 });
 
 // This section will help you delete a record
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", authenticateToken, async (req, res) => {
   try {
     const query = { _id: new ObjectId(req.params.id) };
 
