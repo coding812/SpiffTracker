@@ -119,6 +119,7 @@ export default function Record() {
                     type="text"
                     name="employee_name"
                     id="employee_name"
+                    required
                     className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-slate-900 placeholder:text-slate-400 focus:ring-0 sm:text-sm sm:leading-6"
                     placeholder="First Last"
                     value={form.employee_name}
@@ -141,6 +142,7 @@ export default function Record() {
                     type="number"
                     name="company_id"
                     id="company_id"
+                    required
                     className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-slate-900 placeholder:text-slate-400 focus:ring-0 sm:text-sm sm:leading-6"
                     placeholder="Enter Company ID Number"
                     value={form.company_id}
@@ -163,6 +165,7 @@ export default function Record() {
                     type="date"
                     name="date_of_sale"
                     id="date_of_sale"
+                    required
                     className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-slate-900 placeholder:text-slate-400 focus:ring-0 sm:text-sm sm:leading-6"
                     placeholder="Developer Advocate"
                     value={form.date_of_sale}
@@ -185,6 +188,7 @@ export default function Record() {
                     type="date"
                     name="job_completed"
                     id="job_completed"
+                    required
                     className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-slate-900 placeholder:text-slate-400 focus:ring-0 sm:text-sm sm:leading-6"
                     placeholder=""
                     value={form.job_completed}
@@ -207,6 +211,7 @@ export default function Record() {
                     type="text"
                     name="customer_name"
                     id="customer_name"
+                    required
                     className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-slate-900 placeholder:text-slate-400 focus:ring-0 sm:text-sm sm:leading-6"
                     placeholder="First Last"
                     value={form.customer_name}
@@ -229,6 +234,7 @@ export default function Record() {
                     type="text"
                     name="work_order"
                     id="work_order"
+                    required
                     className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-slate-900 placeholder:text-slate-400 focus:ring-0 sm:text-sm sm:leading-6"
                     placeholder="Enter Work Order or Invoice Number"
                     value={form.work_order}
@@ -251,6 +257,7 @@ export default function Record() {
                     type="text"
                     name="sale_description"
                     id="sale_description"
+                    required
                     className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-slate-900 placeholder:text-slate-400 focus:ring-0 sm:text-sm sm:leading-6"
                     placeholder="Enter Sale Description"
                     value={form.sale_description}
@@ -270,13 +277,19 @@ export default function Record() {
               <div className="mt-2">
                 <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-slate-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-400 sm:max-w-md">
                   <input
-                    type="number"
+                    type="text"
                     name="sale_amount"
                     id="sale_amount"
+                    required
                     className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-slate-900 placeholder:text-slate-400 focus:ring-0 sm:text-sm sm:leading-6"
                     placeholder="Enter Sale Amount"
                     value={form.sale_amount}
-                    onChange={(e) => updateForm({ sale_amount: e.target.value })}
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      if (!isNaN(value)) {
+                        updateForm({ sale_amount: value });
+                      }
+                    }}
                   />
                 </div>
               </div>
@@ -295,6 +308,7 @@ export default function Record() {
                     type="number"
                     name="expected_commission"
                     id="expected_commission"
+                    required
                     className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-slate-900 placeholder:text-slate-400 focus:ring-0 sm:text-sm sm:leading-6"
                     placeholder="Enter Expected Commission"
                     value={form.expected_commission}
