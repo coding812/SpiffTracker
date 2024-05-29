@@ -60,22 +60,6 @@ const Register = () => {
                         alert("An error occurred while adding the record. Please try again.");
                     }
                 }
-                // } else {
-                //     // if we are updating a record we will PATCH to /record/:id.
-                //     response = await fetch(`http://localhost:5050/register/${params.id}`, {
-                //         method: "PATCH",
-                //         headers: {
-                //             "Content-Type": "application/json",
-                //         },
-                //         body: JSON.stringify(user),
-                //     });
-
-                //     if (response.ok) {
-                //         // Record updated successfully
-                //         navigate("/");
-                //     } else {
-                //         alert("An error occurred while updating the record. Please try again.");
-                //     }
             }
 
             if (!response.ok) {

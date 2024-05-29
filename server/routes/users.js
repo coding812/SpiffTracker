@@ -39,8 +39,7 @@ router.post("/login", async (req, res) => {
 });
 
 // Register route
-router.post("/register", async (req, res) => 
-    {
+router.post("/register", async (req, res) => {
     try 
     {
         let newDocument = {
@@ -50,6 +49,20 @@ router.post("/register", async (req, res) =>
             password: bcrypt.hashSync(req.body.password, saltRounds),
             companyId: req.body.companyId,
         };
+        let existingUser = await db.collection("users").findOne({ email: req.body.email });
+        let existingCompany = await db.collection("users").findOne({ companyId: req.body.companyId });
+        if (existingUser && existingCompany) {
+            console.log("user.js line 56", `User with email ${req.body.email} and company with ID ${req.body.companyId} already exist`);
+            return res.send("User and company already exist").status(409);
+        } 
+        else if (existingUser) {
+            console.log("user.js line 56", `User with email ${req.body.email} already exists`);
+            return res.send("User already exists").status(409);
+        } 
+        else if (existingCompany) {
+            console.log("user.js line 56", `Company with ID ${req.body.companyId} already exists`);
+            return res.send("Company already exists").status(409);
+        }
         let collection = db.collection("users");
         let result = await collection.insertOne(newDocument);
         console.table(newDocument);
