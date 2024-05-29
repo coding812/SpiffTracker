@@ -22,29 +22,31 @@ router.get("/", authenticateToken, async (req, res) => {
 
 // This section will help you create a new record.
 router.post("/", async (req, res) => {
-  try {
-    let newDocument = {
-      employee_name: req.body.employee_name,
-      company_id: req.body.company_id,
-      date_of_sale: req.body.date_of_sale,
-      job_completed: req.body.job_completed,
-      customer_name: req.body.customer_name,
-      work_order: req.body.work_order,
-      sale_description: req.body.sale_description,
-      sale_amount: req.body.sale_amount,
-      expected_commission: req.body.expected_commission,
-    };
-    let collection = db.collection("records");
-    let result = await collection.insertOne(newDocument);
-    console.table(newDocument);
-    res.send(result).status(204);
-  } 
-  catch (err) 
-  {
-    console.error(err);
-    res.status(500).send("Error adding record");
+  let newDocument = {
+    employee_name: req.body.employee_name,
+    company_id: req.body.company_id,
+    date_of_sale: req.body.date_of_sale,
+    job_completed: req.body.job_completed,
+    customer_name: req.body.customer_name,
+    work_order: req.body.work_order,
+    sale_description: req.body.sale_description,
+    sale_amount: req.body.sale_amount,
+    expected_commission: req.body.expected_commission,
+  };
+
+  let existingCompany = await db.collection("users").findOne({ Company_id: req.body.company_id });
+
+  if (!existingCompany) {
+    console.log("sales.js line 39", `Company with ID ${req.body.company_id} does not exist`);
+    return res.send("Company does not exist").status(404);
   }
-});
+
+  let collection = db.collection("records");
+  let result = await collection.insertOne(newDocument);
+  console.table(newDocument);
+  res.send(result).status(204);
+  } 
+);
 
 // This section will help you update a record by id.
 router.patch("/:id", authenticateToken, async (req, res) => {
