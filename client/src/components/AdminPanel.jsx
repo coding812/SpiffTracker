@@ -8,19 +8,19 @@ const Record = (props) => (
       {props.record.companyId}
     </td>
     <td className="px-4 py-4 align-middle text-sm font-medium text-muted-foreground">
-      {props.record.employee_name}
+      {props.record.employeeName}
     </td>
     <td className="px-4 py-4 align-middle text-sm font-medium text-muted-foreground">
-      {props.record.customer_name}
+      {props.record.customerName}
     </td>
     <td className="px-4 py-4 align-middle text-sm font-medium text-muted-foreground">
-      {props.record.work_order}
+      {props.record.workOrder}
     </td>
     <td className="px-4 py-4 align-middle text-sm font-medium text-muted-foreground">
-      {props.record.sale_amount}
+      {props.record.saleAmount}
     </td>
     <td className="px-4 py-4 align-middle text-sm font-medium text-muted-foreground">
-      {props.record.expected_commission}
+      {props.record.expectedCommission}
     </td>
     <td className="px-4 py-4 align-middle text-sm font-medium text-muted-foreground">
       <div className="flex space-x-2">
@@ -70,11 +70,10 @@ export default function RecordList() {
       const records = await response.json();
       
       setRecords(records);
+      console.table(records);
     }
     getRecords();
   }, [companyId]);
-
-  console.log("RecordList.js line 77", companyId);
 
   // This method will delete a record
   async function deleteRecord(id) {
