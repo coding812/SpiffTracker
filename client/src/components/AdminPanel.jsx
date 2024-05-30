@@ -5,7 +5,7 @@ import { NavLink, useLocation } from "react-router-dom";
 const Record = (props) => (
   <tr className="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
     <td className="px-4 py-4 align-middle text-sm font-medium text-muted-foreground">
-      {props.record.company_id}
+      {props.record.companyId}
     </td>
     <td className="px-4 py-4 align-middle text-sm font-medium text-muted-foreground">
       {props.record.employee_name}
@@ -73,6 +73,8 @@ export default function RecordList() {
     }
     getRecords();
   }, [companyId]);
+
+  console.log("RecordList.js line 77", companyId);
 
   // This method will delete a record
   async function deleteRecord(id) {

@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 const Record = (props) => (
   <tr className="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
     <td className="px-4 py-4 align-middle text-sm font-medium text-muted-foreground">
-      {props.record.company_id}
+      {props.record.companyId}
     </td>
     <td className="px-4 py-4 align-middle text-sm font-medium text-muted-foreground">
       {props.record.employee_name}
@@ -50,7 +50,7 @@ export default function RecordList() {
   // This method fetches the records from the database.
   useEffect(() => {
     async function getRecords() {
-      const response = await fetch(`http://localhost:5050/record/?company_id=123`);
+      const response = await fetch(`http://localhost:5050/record/?companyId=123`);
       if (!response.ok) {
         const message = `An error occurred: ${response.statusText}`;
         console.error(message);

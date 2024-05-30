@@ -3,15 +3,15 @@ import { useParams, useNavigate } from "react-router-dom";
 
 export default function Record() {
   const [form, setForm] = useState({
-    employee_name: "",
-    company_id: "",
-    date_of_sale: "",
-    job_completed: "",
-    customer_name: "",
-    work_order: "",
-    sale_description: "",
-    sale_amount: "",
-    expected_commission: "",
+    employeeName: "",
+    companyId: "",
+    dateOfSale: "",
+    jobCompleted: "",
+    customerName: "",
+    workOrder: "",
+    saleDescription: "",
+    saleAmount: "",
+    expectedCommission: "",
   });
   const [isNew, setIsNew] = useState(true);
   const params = useParams();
@@ -82,15 +82,15 @@ export default function Record() {
       console.error('A problem occurred adding or updating a record: ', error);
     } finally {
       setForm({ 
-        employee_name: "", 
-        company_id: "", 
-        date_of_sale: "", 
-        job_completed: "", 
-        customer_name: "", 
-        work_order: "", 
-        sale_description: "", 
-        sale_amount: "", 
-        expected_commission: ""});
+        employeeName: "", 
+        companyId: "", 
+        dateOfSale: "", 
+        jobCompleted: "", 
+        customerName: "", 
+        workOrder: "", 
+        saleDescription: "", 
+        saleAmount: "", 
+        expectedCommission: ""});
       navigate("/");
     }
   }
@@ -108,7 +108,7 @@ export default function Record() {
             {/* EMPLOYEE NAME */}
             <div className="sm:col-span-4">
               <label
-                htmlFor="employee_name"
+                htmlFor="employeeName"
                 className="block text-sm font-medium leading-6 text-slate-900"
               >
                 Employee Name
@@ -117,13 +117,13 @@ export default function Record() {
                 <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-slate-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                   <input
                     type="text"
-                    name="employee_name"
-                    id="employee_name"
+                    name="employeeName"
+                    id="employeeName"
                     required
                     className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-slate-900 placeholder:text-slate-400 focus:ring-0 sm:text-sm sm:leading-6"
                     placeholder="First Last"
-                    value={form.employee_name}
-                    onChange={(e) => updateForm({ employee_name: e.target.value })}
+                    value={form.employeeName}
+                    onChange={(e) => updateForm({ employeeName: e.target.value })}
                   />
                 </div>
               </div>
@@ -131,7 +131,7 @@ export default function Record() {
             {/* COMPANY ID NUMBER */}
             <div className="sm:col-span-4">
               <label
-                htmlFor="company_id"
+                htmlFor="companyId"
                 className="block text-sm font-medium leading-6 text-slate-900"
               >
                 Company ID Number
@@ -140,13 +140,13 @@ export default function Record() {
                 <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-slate-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-400 sm:max-w-md">
                   <input
                     type="number"
-                    name="company_id"
-                    id="company_id"
+                    name="companyId"
+                    id="companyId"
                     required
                     className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-slate-900 placeholder:text-slate-400 focus:ring-0 sm:text-sm sm:leading-6"
                     placeholder="Enter Company ID Number"
-                    value={form.company_id}
-                    onChange={(e) => updateForm({ company_id: e.target.value })}
+                    value={form.companyId}
+                    onChange={(e) => updateForm({ companyId: e.target.value })}
                   />
                 </div>
               </div>
@@ -154,7 +154,7 @@ export default function Record() {
             {/* DATE OF SALE */}
             <div className="sm:col-span-4">
               <label
-                htmlFor="date_of_sale"
+                htmlFor="dateOfSale"
                 className="block text-sm font-medium leading-6 text-slate-900"
               >
                 Date of Sale
@@ -163,13 +163,13 @@ export default function Record() {
                 <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-slate-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-400 sm:max-w-md">
                   <input
                     type="date"
-                    name="date_of_sale"
-                    id="date_of_sale"
+                    name="dateOfSale"
+                    id="dateOfSale"
                     required
                     className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-slate-900 placeholder:text-slate-400 focus:ring-0 sm:text-sm sm:leading-6"
                     placeholder="Developer Advocate"
-                    value={form.date_of_sale}
-                    onChange={(e) => updateForm({ date_of_sale: e.target.value })}
+                    value={form.dateOfSale}
+                    onChange={(e) => updateForm({ dateOfSale: e.target.value })}
                   />
                 </div>
               </div>
@@ -177,7 +177,7 @@ export default function Record() {
             {/* JOB COMPLETED */}
             <div className="sm:col-span-4">
               <label
-                htmlFor="job_completed"
+                htmlFor="jobCompleted"
                 className="block text-sm font-medium leading-6 text-slate-900"
               >
                 Job Completed
@@ -186,13 +186,13 @@ export default function Record() {
                 <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-slate-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-400 sm:max-w-md">
                   <input
                     type="date"
-                    name="job_completed"
-                    id="job_completed"
+                    name="jobCompleted"
+                    id="jobCompleted"
                     required
                     className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-slate-900 placeholder:text-slate-400 focus:ring-0 sm:text-sm sm:leading-6"
                     placeholder=""
-                    value={form.job_completed}
-                    onChange={(e) => updateForm({ job_completed: e.target.value })}
+                    value={form.jobCompleted}
+                    onChange={(e) => updateForm({ jobCompleted: e.target.value })}
                   />
                 </div>
               </div>
@@ -200,7 +200,7 @@ export default function Record() {
             {/* CUSTOMER NAME */}
             <div className="sm:col-span-4">
               <label
-                htmlFor="customer_name"
+                htmlFor="customerName"
                 className="block text-sm font-medium leading-6 text-slate-900"
               >
                 Customer Name
@@ -209,13 +209,13 @@ export default function Record() {
                 <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-slate-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-400 sm:max-w-md">
                   <input
                     type="text"
-                    name="customer_name"
-                    id="customer_name"
+                    name="customerName"
+                    id="customerName"
                     required
                     className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-slate-900 placeholder:text-slate-400 focus:ring-0 sm:text-sm sm:leading-6"
                     placeholder="First Last"
-                    value={form.customer_name}
-                    onChange={(e) => updateForm({ customer_name: e.target.value })}
+                    value={form.customerName}
+                    onChange={(e) => updateForm({ customerName: e.target.value })}
                   />
                 </div>
               </div>
@@ -223,7 +223,7 @@ export default function Record() {
             {/* WORK ORDER / INVOICE # */}
             <div className="sm:col-span-4">
               <label
-                htmlFor="work_order"
+                htmlFor="workOrder"
                 className="block text-sm font-medium leading-6 text-slate-900"
               >
                 Work Order / Invoice #
@@ -232,13 +232,13 @@ export default function Record() {
                 <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-slate-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-400 sm:max-w-md">
                   <input
                     type="text"
-                    name="work_order"
-                    id="work_order"
+                    name="workOrder"
+                    id="workOrder"
                     required
                     className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-slate-900 placeholder:text-slate-400 focus:ring-0 sm:text-sm sm:leading-6"
                     placeholder="Enter Work Order or Invoice Number"
-                    value={form.work_order}
-                    onChange={(e) => updateForm({ work_order: e.target.value })}
+                    value={form.workOrder}
+                    onChange={(e) => updateForm({ workOrder: e.target.value })}
                   />
                 </div>
               </div>
@@ -246,7 +246,7 @@ export default function Record() {
             {/* SALE DESCRIPION */}
             <div className="sm:col-span-4">
               <label
-                htmlFor="sale_description"
+                htmlFor="saleDescription"
                 className="block text-sm font-medium leading-6 text-slate-900"
               >
                 Sale Description
@@ -255,13 +255,13 @@ export default function Record() {
                 <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-slate-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-400 sm:max-w-md">
                   <input
                     type="text"
-                    name="sale_description"
-                    id="sale_description"
+                    name="saleDescription"
+                    id="saleDescription"
                     required
                     className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-slate-900 placeholder:text-slate-400 focus:ring-0 sm:text-sm sm:leading-6"
                     placeholder="Enter Sale Description"
-                    value={form.sale_description}
-                    onChange={(e) => updateForm({ sale_description: e.target.value })}
+                    value={form.saleDescription}
+                    onChange={(e) => updateForm({ saleDescription: e.target.value })}
                   />
                 </div>
               </div>
@@ -269,7 +269,7 @@ export default function Record() {
             {/* SALE AMOUNT */}
             <div className="sm:col-span-4">
               <label
-                htmlFor="sale_amount"
+                htmlFor="saleAmount"
                 className="block text-sm font-medium leading-6 text-slate-900"
               >
                 Sale Amount
@@ -278,16 +278,16 @@ export default function Record() {
                 <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-slate-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-400 sm:max-w-md">
                   <input
                     type="text"
-                    name="sale_amount"
-                    id="sale_amount"
+                    name="saleAmount"
+                    id="saleAmount"
                     required
                     className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-slate-900 placeholder:text-slate-400 focus:ring-0 sm:text-sm sm:leading-6"
                     placeholder="Enter Sale Amount"
-                    value={form.sale_amount}
+                    value={form.saleAmount}
                     onChange={(e) => {
                       const value = e.target.value;
                       if (!isNaN(value)) {
-                        updateForm({ sale_amount: value });
+                        updateForm({ saleAmount: value });
                       }
                     }}
                   />
@@ -297,7 +297,7 @@ export default function Record() {
             {/* EXPECTED COMMISSION */}
             <div className="sm:col-span-4">
               <label
-                htmlFor="expected_commission"
+                htmlFor="expectedCommission"
                 className="block text-sm font-medium leading-6 text-slate-900"
               >
                 Expected Commission
@@ -306,13 +306,13 @@ export default function Record() {
                 <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-slate-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-400 sm:max-w-md">
                   <input
                     type="number"
-                    name="expected_commission"
-                    id="expected_commission"
+                    name="expectedCommission"
+                    id="expectedCommission"
                     required
                     className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-slate-900 placeholder:text-slate-400 focus:ring-0 sm:text-sm sm:leading-6"
                     placeholder="Enter Expected Commission"
-                    value={form.expected_commission}
-                    onChange={(e) => updateForm({ expected_commission: e.target.value })}
+                    value={form.expectedCommission}
+                    onChange={(e) => updateForm({ expectedCommission: e.target.value })}
                   />
                 </div>
               </div>

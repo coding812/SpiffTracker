@@ -49,14 +49,18 @@ const Register = () => {
 
                 if (response.ok) {
                     // Record added successfully
-                    navigate("/admin");
-                } else {
+                    navigate("/login");
+                } 
+                else {
                     const data = await response.json();
+
                     if (data.error === "Email already exists") {
                         alert("Email already exists. Please enter a different email.");
-                    } else if (data.error === "Company ID already exists") {
+                    } 
+                    else if (data.error === "Company ID already exists") {
                         alert("Company ID already exists. Please enter a different company ID.");
-                    } else {
+                    } 
+                    else {
                         alert("An error occurred while adding the record. Please try again.");
                     }
                 }
@@ -65,9 +69,11 @@ const Register = () => {
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
-        } catch (error) {
+        } 
+        catch (error) {
             console.error('A problem occurred adding or updating a record: ', error);
-        } finally {
+        } 
+        finally {
             setForm({
                 firstName: "",
                 lastName: "",
@@ -75,7 +81,6 @@ const Register = () => {
                 password: "",
                 companyId: "",
             });
-            navigate("/");
         }
     }
 
