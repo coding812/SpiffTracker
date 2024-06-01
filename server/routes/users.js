@@ -55,15 +55,15 @@ router.post("/register", async (req, res) => {
 
         if (existingUser && existingCompany) {
             console.log("user.js line 56", `User with email ${req.body.email} and company with ID ${req.body.companyId} already exist`);
-            return res.status(409).send("User and company already exist");
+            return res.status(409).json({ error: "User and company already exist" });
         } 
         else if (existingUser) {
             console.log("user.js line 56", `User with email ${req.body.email} already exists`);
-            return res.status(409).send("User already exists");
+            return res.status(409).json({error: "User already exists"});
         } 
         else if (existingCompany) {
-            console.log("user.js line 56", `Company with ID ${req.body.companyId} already exists`);
-            return res.status(409).send("Company already exists");
+            console.log("user.js line 56", `Company with that ID already exists`);
+            return res.status(409).json({error: "Company already exists"});
         }
 
         let collection = db.collection("users");

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from "react-router-dom";
-
+import { toast } from 'react-toastify';
 
 const Login = () => {
   const [companyId, setCompanyId] = useState('');
@@ -11,7 +11,8 @@ const Login = () => {
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
 
-    const response = await fetch('http://localhost:5050/users/login', {
+    try{
+      const response = await fetch('http://localhost:5050/users/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -21,15 +22,20 @@ const Login = () => {
 
     const data = await response.json();
     
-    if (response.ok) {
-      setCompanyId(data.companyId);
-      localStorage.setItem('accessToken', data.accessToken)
-      navigate('/admin', { state: { companyId: data.user.companyId } });
+    if (!response.ok) {
+      const data = await response.json();
+      throw new Error(data.message || 'Error logging in');
     }
+    setCompanyId(data.companyId);
+    localStorage.setItem('accessToken', data.accessToken)
+    toast.success('Login successful');
+    navigate('/admin', { state: { companyId: data.user.companyId } });
   }
-
-
-
+  catch (error) {
+    toast.error('Login failed, please try again');
+  }
+}
+    
 
   return (
     <>

@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { toast } from 'react-toastify';
 
 export default function Record() {
   const [form, setForm] = useState({
@@ -20,7 +21,7 @@ export default function Record() {
   useEffect(() => {
     async function fetchData() {
       const id = params.id?.toString() || undefined;
-      if(!id) return;
+      if (!id) return;
       setIsNew(false);
       const response = await fetch(
         `http://localhost:5050/record/${params.id.toString()}`
@@ -64,33 +65,28 @@ export default function Record() {
           },
           body: JSON.stringify(sale),
         });
-      } else {
-        // if we are updating a record we will PATCH to /record/:id.
-        response = await fetch(`http://localhost:5050/record/${params.id}`, {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(sale),
-        });
       }
 
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-    } catch (error) {
+      toast.success("Sale information saved successfully!");
+    }
+    catch (error) {
       console.error('A problem occurred adding or updating a record: ', error);
-    } finally {
-      setForm({ 
-        employeeName: "", 
-        companyId: "", 
-        dateOfSale: "", 
-        jobCompleted: "", 
-        customerName: "", 
-        workOrder: "", 
-        saleDescription: "", 
-        saleAmount: "", 
-        expectedCommission: ""});
+    }
+    finally {
+      setForm({
+        employeeName: "",
+        companyId: "",
+        dateOfSale: "",
+        jobCompleted: "",
+        customerName: "",
+        workOrder: "",
+        saleDescription: "",
+        saleAmount: "",
+        expectedCommission: ""
+      });
       navigate("/");
     }
   }

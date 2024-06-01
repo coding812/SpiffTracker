@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Register = () => {
     const [form, setForm] = useState({
@@ -49,19 +50,21 @@ const Register = () => {
 
                 if (response.ok) {
                     // Record added successfully
+                    toast.success("New user added successfully. Please login to continue.");
                     navigate("/login");
                 } 
                 else {
                     const data = await response.json();
+                    console.log(data.error);
 
                     if (data.error === "Email already exists") {
-                        alert("Email already exists. Please enter a different email.");
+                        toast.error("Email already exists. Please enter a different email.");
                     } 
-                    else if (data.error === "Company ID already exists") {
-                        alert("Company ID already exists. Please enter a different company ID.");
+                    else if (data.error === "Company already exists") {
+                        toast.error("Company ID already exists. Please enter a different company ID.");
                     } 
-                    else {
-                        alert("An error occurred while adding the record. Please try again.");
+                    else if (data.error === "User and company already exist") {
+                        toast.error("User and company already exist. Please enter a different email and company ID.");
                     }
                 }
             }
