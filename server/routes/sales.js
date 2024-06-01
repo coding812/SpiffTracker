@@ -13,13 +13,8 @@ router.get("/", authenticateToken, async (req, res) => {
   let collection = db.collection("sales");
   let query = { companyId: req.query.companyId };
   let results = await collection.find(query).toArray();
-  console.log("sales.js line 16");
-  console.table(results);
   res.status(200).send(results);
 });
-
-// This section will help you get a single record by id
-
 
 // This section will help you create a new record.
 router.post("/", async (req, res) => {
@@ -46,13 +41,20 @@ router.post("/", async (req, res) => {
   let result = await collection.insertOne(newDocument);
   console.table(newDocument);
   res.send(result).status(204);
-  } 
+}
 );
 
 // This section will help you update a record by id.
 router.patch("/:id", authenticateToken, async (req, res) => {
   try {
-    const query = { _id: new ObjectId(req.params.id) };
+    const recordId = req.params.id;
+    console.log("Received ID:", recordId);
+
+    // Validate ID
+    if (!ObjectId.isValid(recordId)) {
+      return res.status(400).json({ message: "Invalid ID format" });
+    }
+    const query = { _id: new ObjectId(recordId) };
     const updates = {
       $set: {
         employeeName: req.body.employeeName,
@@ -67,18 +69,25 @@ router.patch("/:id", authenticateToken, async (req, res) => {
       },
     };
 
-    let collection = db.collection("sales");
-    let result = await collection.updateOne(query, updates);
-    let updatedRecord = Object.entries(updates['$set']).map(([key, value]) => ({Property: key, Value: value}));
+    const collection = db.collection("sales");
+    const result = await collection.updateOne(query, updates);
+
+    let updatedRecord = Object.entries(updates['$set']).map(([key, value]) => ({ Property: key, Value: value }));
     console.table(updatedRecord);
-    res.send(result).status(200);
-  } 
-  catch (err) 
-  {
+
+    if (result.matchedCount === 0) {
+      return res.status(404).json({ message: "Record not found" });
+    }
+
+    res.status(200).send(result);
+  }
+  catch (err) {
     console.error(err);
     res.status(500).send("Error updating record");
   }
 });
+
+
 
 // This section will help you delete a record
 router.delete("/:id", authenticateToken, async (req, res) => {
@@ -89,9 +98,8 @@ router.delete("/:id", authenticateToken, async (req, res) => {
     let result = await collection.deleteOne(query);
     console.table(result);
     res.send(result).status(200);
-  } 
-  catch (err) 
-  {
+  }
+  catch (err) {
     console.error(err);
     res.status(500).send("Error deleting record");
   }
