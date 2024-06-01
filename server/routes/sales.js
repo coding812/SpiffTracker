@@ -87,8 +87,6 @@ router.patch("/:id", authenticateToken, async (req, res) => {
   }
 });
 
-
-
 // This section will help you delete a record
 router.delete("/:id", authenticateToken, async (req, res) => {
   try {

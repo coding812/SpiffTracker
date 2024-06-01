@@ -444,6 +444,7 @@ const RecordList = () => {
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
+    await getRecords();
   };
 
 
