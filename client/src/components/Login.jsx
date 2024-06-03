@@ -28,8 +28,8 @@ const Login = () => {
     }
     setCompanyId(data.companyId);
     localStorage.setItem('accessToken', data.accessToken)
-    toast.success('Login successful');
     navigate('/admin', { state: { companyId: data.user.companyId } });
+    toast.success('Login successful');
   }
   catch (error) {
     toast.error('Login failed, please try again');

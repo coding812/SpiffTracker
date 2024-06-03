@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Record = ({ record, updateRecord, deleteRecord }) => {
   const [isEditing, setIsEditing] = useState(false);
@@ -19,6 +20,7 @@ const Record = ({ record, updateRecord, deleteRecord }) => {
   const handleSaveClick = async () => {
     try {
       await updateRecord(record._id, editedRecord);
+      toast.success("Record updated successfully");
       setIsEditing(false);
     } catch (error) {
       console.error("Error saving record:", error);
@@ -26,6 +28,7 @@ const Record = ({ record, updateRecord, deleteRecord }) => {
   };
 
   const handleCancelClick = () => {
+    toast.error("Edit cancelled, changes not saved");
     setIsEditing(false);
     setEditedRecord(record);
   };
@@ -36,9 +39,9 @@ const Record = ({ record, updateRecord, deleteRecord }) => {
 
   return (
     <tr className="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
-      <td className="px-4 py-4 align-middle text-sm font-medium text-muted-foreground">
+      {/* <td className="px-4 py-4 align-middle text-sm font-medium text-muted-foreground">
         {record.companyId}
-      </td>
+      </td> */}
       <td className="px-4 py-4 align-middle text-sm font-medium text-muted-foreground">
         {isEditing ? (
           <input
@@ -196,7 +199,12 @@ const RecordList = () => {
       },
     });
     const newRecords = records.filter((el) => el._id !== id);
+    let confirmDelete = window.confirm("Are you sure you want to delete this record?");
+    if (!confirmDelete) {
+      return;
+    }
     setRecords(newRecords);
+    toast.success("Record deleted successfully");
   };
 
   const recordList = () => {
@@ -234,9 +242,9 @@ const RecordList = () => {
           <table className="w-full text-sm">
             <thead>
               <tr className="border-b hover:bg-muted/50 data-[state=selected]:bg-muted">
-                <th className="h-12 px-4 text-left font-medium text-muted-foreground">
+                {/* <th className="h-12 px-4 text-left font-medium text-muted-foreground">
                   Company ID
-                </th>
+                </th> */}
                 <th className="h-12 px-4 text-left font-medium text-muted-foreground">
                   Employee Name
                 </th>
