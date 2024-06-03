@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const Record = ({ record, updateRecord, deleteRecord }) => {
@@ -146,8 +146,10 @@ const RecordList = () => {
   const [records, setRecords] = useState([]);
   const [loading, setLoading] = useState(true);
   const location = useLocation();
+  const navigate = useNavigate();
   const companyId = location.state.companyId;
 
+  // Update sale in the database
   const updateRecord = async (id, updatedRecord) => {
     const response = await fetch(`http://localhost:5050/record/${id}`, {
       method: "PATCH",
@@ -163,7 +165,7 @@ const RecordList = () => {
     await getRecords();
   };
 
-
+  // Get all sales from the database associated with the companyId
   const getRecords = async () => {
     const response = await fetch(`http://localhost:5050/record?companyId=${companyId}`, {
       method: "GET",
@@ -186,11 +188,19 @@ const RecordList = () => {
     }
   };
 
+  // Upadate the records when the companyId changes
   useEffect(() => {
     getRecords();
   }, [companyId]);
 
+  // Delete a record from the database
   const deleteRecord = async (id) => {
+    const newRecords = records.filter((el) => el._id !== id);
+    let confirmDelete = window.confirm("Are you sure you want to delete this record?");
+    if (!confirmDelete) {
+      return;
+    }
+
     await fetch(`http://localhost:5050/record/${id}`, {
       method: "DELETE",
       headers: {
@@ -198,15 +208,12 @@ const RecordList = () => {
         "Authorization": `Bearer ${localStorage.getItem('accessToken')}`,
       },
     });
-    const newRecords = records.filter((el) => el._id !== id);
-    let confirmDelete = window.confirm("Are you sure you want to delete this record?");
-    if (!confirmDelete) {
-      return;
-    }
+    
     setRecords(newRecords);
     toast.success("Record deleted successfully");
   };
 
+  // Display the list of records
   const recordList = () => {
     if (loading) {
       return <div>Loading...</div>;

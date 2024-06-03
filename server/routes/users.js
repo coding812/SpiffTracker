@@ -15,22 +15,18 @@ router.post("/login", async (req, res) => {
     try {
         let collection = db.collection("users");
         let user = await collection.findOne({ email: req.body.email });
-        console.log("users.js line 18", `Attempting to find user with email: ${req.body.email}`);
 
         if (!user) {
-            console.log("users.js line 21", `User with email ${req.body.email} not found`);
-            return res.send("Not found").status(404)
+            return res.status(404).send("Not found")
         }
 
         let passwordMatch = await bcrypt.compare(req.body.password, user.password);
 
         if (!passwordMatch) {
-            console.log("user.js line 28", `User with email ${req.body.email} found, but password is incorrect`);
-            return res.send("Invalid password").status(401)
+            return res.status(401).send("Invalid password")
         };
         const accessToken = jwt.sign(user, process.env.JWT_SECRET, {expiresIn: "3600s"})
         res.status(200).send({user, accessToken})
-        console.log("user.js line 33", `User with email ${req.body.email} found, successfully logged in`);
     }
     catch (err) {
         console.error(err);

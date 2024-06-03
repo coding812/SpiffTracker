@@ -2,10 +2,18 @@ import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from "react-router-dom";
 import { toast } from 'react-toastify';
 
-const Login = () => {
+const Login = (props) => {
   const [companyId, setCompanyId] = useState('');
   const navigate = useNavigate();
 
+  // Use useEffect to navigate to the admin page when companyId changes
+  useEffect(() => {
+    if (companyId) {
+      navigate('/admin', { state: { companyId } });
+    }
+  }, [companyId]);
+
+  // Define the onSubmit function to handle form submission and login logic
   async function onSubmit(e) {
     e.preventDefault();
     const email = document.getElementById('email').value;
@@ -13,29 +21,35 @@ const Login = () => {
 
     try{
       const response = await fetch('http://localhost:5050/users/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ email, password }),
-    });
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      });
 
-    const data = await response.json();
-    
-    if (!response.ok) {
       const data = await response.json();
-      throw new Error(data.message || 'Error logging in');
+      
+      // If the response is not ok, throw an error
+      if (!response.ok) {
+        throw new Error(data.message || 'Error logging in');
+      }
+
+      // Set the companyId state variable and save the accessToken to localStorage
+      setCompanyId(data.companyId);
+      localStorage.setItem('accessToken', data.accessToken)
+
+      // Navigate to the admin page with the companyId in the state
+      navigate('/admin', { state: { companyId: data.user.companyId } });
+
+      toast.success('Login successful');
     }
-    setCompanyId(data.companyId);
-    localStorage.setItem('accessToken', data.accessToken)
-    navigate('/admin', { state: { companyId: data.user.companyId } });
-    toast.success('Login successful');
+    catch (error) {
+      // Log and show an error toast message if login fails
+      console.error('Login failed:', error);
+      toast.error('Login failed, please try again');
+    }
   }
-  catch (error) {
-    toast.error('Login failed, please try again');
-  }
-}
-    
 
   return (
     <>
@@ -91,6 +105,7 @@ const Login = () => {
               <button
                 type="submit"
                 className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                onClick={() =>  props.setLoggedIn(true)}
               >
                 Sign in
               </button>
@@ -107,7 +122,6 @@ const Login = () => {
       </div>
     </>
   );
-
 };
 
 export default Login;
