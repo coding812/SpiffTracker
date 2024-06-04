@@ -97,7 +97,8 @@ function Main() {
     },
   ]);
 
-  return <RouterProvider router={router} />;
+  return (
+  <RouterProvider router={router} />);
 }
 
 ReactDOM.createRoot(document.getElementById("root")).render(
