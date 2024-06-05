@@ -20,7 +20,7 @@ const Record = ({ record, updateRecord, deleteRecord }) => {
   const handleSaveClick = async () => {
     try {
       await updateRecord(record._id, editedRecord);
-      toast.success("Record updated successfully");
+      toast.success("Sale updated successfully");
       setIsEditing(false);
     } catch (error) {
       console.error("Error saving record:", error);
@@ -142,7 +142,7 @@ const Record = ({ record, updateRecord, deleteRecord }) => {
   );
 };
 
-const RecordList = () => {
+const AdminPanel = () => {
   const [records, setRecords] = useState([]);
   const [loading, setLoading] = useState(true);
   const location = useLocation();
@@ -277,7 +277,7 @@ const RecordList = () => {
   );
 };
 
-export default RecordList;
+export default AdminPanel;
 
 
 
