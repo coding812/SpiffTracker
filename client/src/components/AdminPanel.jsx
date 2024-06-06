@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-
 const Record = ({ record, updateRecord, deleteRecord }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editedRecord, setEditedRecord] = useState({ ...record });
@@ -134,6 +133,7 @@ const Record = ({ record, updateRecord, deleteRecord }) => {
               >
                 Delete
               </button>
+             
             </>
           )}
         </div>
@@ -145,6 +145,7 @@ const Record = ({ record, updateRecord, deleteRecord }) => {
 const AdminPanel = () => {
   const [records, setRecords] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [showModal, setShowModal] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
   const companyId = location.state.companyId;
@@ -196,7 +197,9 @@ const AdminPanel = () => {
   // Delete a record from the database
   const deleteRecord = async (id) => {
     const newRecords = records.filter((el) => el._id !== id);
+
     let confirmDelete = window.confirm("Are you sure you want to delete this record?");
+
     if (!confirmDelete) {
       return;
     }
@@ -236,6 +239,11 @@ const AdminPanel = () => {
     <>
       <div className="flex justify-between items-center mb-2">
         <h3 className="text-lg font-semibold p-4">Previous Sales</h3>
+        {/* <button className="inline-flex items-center justify-center text-sm font-medium border bg-background hover:bg-slate-100 h-9 rounded-md px-3"
+          onClick={() => setShowModal(true)}>
+            Enter Sale
+        </button>
+        {showModal && <NewSale closeModal={() => setShowModal(false)} />} */}
         <NavLink
           className="inline-flex items-center justify-center text-md font-medium border bg-background hover:bg-slate-100 h-9 rounded-md px-3"
           to="/"
@@ -273,6 +281,7 @@ const AdminPanel = () => {
           </table>
         </div>
       </div>
+      
     </>
   );
 };
