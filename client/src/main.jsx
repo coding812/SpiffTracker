@@ -2,6 +2,10 @@ import * as React from "react";
 import { useState, useEffect } from "react";
 import * as ReactDOM from "react-dom/client";
 import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom";
+
+import {Provider} from "react-redux";
+import  store  from "./redux/store";
+
 import App from "./App";
 import Record from "./components/Record";
 import AdminPanel from "./components/AdminPanel";
@@ -98,12 +102,14 @@ function Main() {
   ]);
 
   return (
-  <RouterProvider router={router} />);
+  <RouterProvider router={router}  />);
 }
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <Main />
+    <Provider store={store}>
+      <Main />
+    </Provider>
   </React.StrictMode>
 );
 

@@ -1,17 +1,14 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from 'react-redux';
+import { login, logout } from '../redux/slice';
+
 import { toast } from 'react-toastify';
 
 const Login = (props) => {
-  const [companyId, setCompanyId] = useState('');
+  
   const navigate = useNavigate();
-
-  // Use useEffect to navigate to the admin page when companyId changes
-  useEffect(() => {
-    if (companyId) {
-      navigate('/admin', { state: { companyId } });
-    }
-  }, [companyId]);
+  const dispatch = useDispatch();
 
   // Define the onSubmit function to handle form submission and login logic
   async function onSubmit(e) {
@@ -35,13 +32,9 @@ const Login = (props) => {
         throw new Error(data.message || 'Error logging in');
       }
 
-      // Set the companyId state variable and save the accessToken to localStorage
-      setCompanyId(data.companyId);
-      localStorage.setItem('accessToken', data.accessToken)
-
-      // Navigate to the admin page with the companyId in the state
-      navigate('/admin', { state: { companyId: data.user.companyId } });
-
+      dispatch(login({token: data.accessToken, user: data.user}));
+      // Navigate to the admin page 
+      navigate('/admin');
       toast.success('Login successful');
     }
     catch (error) {

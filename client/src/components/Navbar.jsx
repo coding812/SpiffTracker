@@ -1,28 +1,23 @@
 import { useEffect, useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { logout } from "../redux/slice";
 
 export default function Navbar() {
-  const [loggedIn, setLoggedIn] = useState(false);
   const location = useLocation();
-  const [linkText, setLinkText] = useState("");
-  const [linkPath, setLinkPath] = useState("");
+  const dispatch = useDispatch();
+  const userState = useSelector((state) => state.userState);
   const [buttonVisible, setButtonVisible] = useState(false);
-
+  const loggedIn = !!userState.token;
+  const linkPath = loggedIn ? "/" : "/login";
+  const linkText = loggedIn ? "Sign Out" : "Sign In";
+  
   useEffect(() => {
-    const token = localStorage.getItem("accessToken");
-    setLoggedIn(!!token);
-    setButtonVisible(location.pathname === "/login" ? false : true);
-    setLinkPath(loggedIn ? "/" : "/login");
-    setLinkText(loggedIn ? "Sign Out" : "Sign In");
-  }, [loggedIn, location]);
-
+    setButtonVisible(location.pathname !== "/login");
+  }, [location.pathname]);
+  
   function handleLogout() {
-    localStorage.removeItem("accessToken");
-    setLoggedIn(false);
-  }
-
-  function handleLogin() {
-    setLoggedIn(true);
+    dispatch(logout());
   }
 
   return (
@@ -33,7 +28,7 @@ export default function Navbar() {
           Home
         </NavLink>
         <NavLink className="inline-flex items-center justify-center whitespace-nowrap text-md font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-slate-100 h-9 rounded-md px-3" to={linkPath}
-              onClick={() => loggedIn ? handleLogout() : handleLogin()}>
+              onClick={() => loggedIn ? handleLogout() : null}>
           {linkText}
         </NavLink>
       </nav>

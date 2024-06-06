@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+
+import { useSelector, useDispatch } from 'react-redux';
+import { login, logout } from '../redux/slice';
+
 const Record = ({ record, updateRecord, deleteRecord }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editedRecord, setEditedRecord] = useState({ ...record });
@@ -145,10 +149,14 @@ const Record = ({ record, updateRecord, deleteRecord }) => {
 const AdminPanel = () => {
   const [records, setRecords] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [showModal, setShowModal] = useState(false);
-  const location = useLocation();
-  const navigate = useNavigate();
-  const companyId = location.state.companyId;
+
+  const userState = useSelector((state) => state.userState);
+  const dispatch = useDispatch();
+
+  const companyId = userState.user.companyId;
+  const accessToken = userState.token;
+
+  
 
   // Update sale in the database
   const updateRecord = async (id, updatedRecord) => {
@@ -172,7 +180,7 @@ const AdminPanel = () => {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${localStorage.getItem('accessToken')}`,
+        "Authorization": `Bearer ${accessToken}`,
       },
     });
     if (!response.ok) {
@@ -208,7 +216,7 @@ const AdminPanel = () => {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${localStorage.getItem('accessToken')}`,
+        "Authorization": `Bearer ${accessToken}`,
       },
     });
     
