@@ -25,7 +25,8 @@ const Record = ({ record, updateRecord, deleteRecord }) => {
       await updateRecord(record._id, editedRecord);
       toast.success("Sale updated successfully");
       setIsEditing(false);
-    } catch (error) {
+    } 
+    catch (error) {
       console.error("Error saving record:", error);
     }
   };
@@ -164,7 +165,7 @@ const AdminPanel = () => {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${localStorage.getItem('accessToken')}`,
+        "Authorization": `Bearer ${accessToken}`,
       },
       body: JSON.stringify(updatedRecord),
     });
@@ -295,6 +296,5 @@ const AdminPanel = () => {
 };
 
 export default AdminPanel;
-
 
 
