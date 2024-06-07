@@ -32,11 +32,21 @@ const Register = () => {
         });
     }
 
+
+    // TODO: Figure out why this is not navigating to login page after successful registration
+    
+    // TODO: Figure out how to keep form from resetting after successful registration
+
     // This function will handle the submission.
     async function onSubmit(e) {
         e.preventDefault();
 
         const user = { ...form };
+        
+        if (user.password !== user.password2) {
+            toast.error("Passwords do not match. Please try again.");
+            return;
+        }
         try {
             let response;
             if (isNew) {
@@ -74,17 +84,17 @@ const Register = () => {
             }
         } 
         catch (error) {
-            console.error('A problem occurred adding or updating a record: ', error);
+            console.error('A problem occurred adding or updating a user: ', error);
         } 
-        finally {
-            setForm({
-                firstName: "",
-                lastName: "",
-                email: "",
-                password: "",
-                companyId: "",
-            });
-        }
+        // finally {
+        //     setForm({
+        //         firstName: "",
+        //         lastName: "",
+        //         email: "",
+        //         password: "",
+        //         companyId: "",
+        //     });
+        // }
     }
 
     return (

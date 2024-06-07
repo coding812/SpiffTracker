@@ -18,13 +18,13 @@ import "./index.css";
 function Main() {
   const [loggedIn, setLoggedIn] = useState(false);
   const dispatch = useDispatch();
-  const userState = useSelector((state) => state.userState);
+  const userState = useSelector((state) => state.userState.token);
   
   
   // Check if the user is logged in when the component mounts
   useEffect(() => {
     const checkLoginStatus = async () => {
-      if (userState.token) {
+      if (userState) {
         setLoggedIn(true);
       }
     };
