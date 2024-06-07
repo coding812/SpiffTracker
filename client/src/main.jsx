@@ -5,6 +5,8 @@ import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom"
 
 import {Provider} from "react-redux";
 import  store  from "./redux/store";
+import { useSelector, useDispatch } from 'react-redux';
+import { login, logout } from './redux/slice';
 
 import App from "./App";
 import Record from "./components/Record";
@@ -13,28 +15,21 @@ import Login from "./components/Login";
 import Register from "./components/Register";
 import "./index.css";
 
-
 function Main() {
   const [loggedIn, setLoggedIn] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+  const dispatch = useDispatch();
+  const userState = useSelector((state) => state.userState);
+  
   
   // Check if the user is logged in when the component mounts
   useEffect(() => {
     const checkLoginStatus = async () => {
-      const token = localStorage.getItem('accessToken');
-      if (token) {
+      if (userState.token) {
         setLoggedIn(true);
       }
-      setIsLoading(false);
     };
-
     checkLoginStatus();
   }, []);
-
-  // Show a loading message while the component is loading
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
 
   const router = createBrowserRouter([
     {

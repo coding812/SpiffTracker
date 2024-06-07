@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import { NavLink} from "react-router-dom";
 import { toast } from "react-toastify";
 
 import { useSelector, useDispatch } from 'react-redux';
@@ -197,7 +197,7 @@ const AdminPanel = () => {
     }
   };
 
-  // Upadate the records when the companyId changes
+  // Update the records when the companyId changes
   useEffect(() => {
     getRecords();
   }, [companyId]);
