@@ -1,8 +1,22 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { toast } from 'react-toastify';
+import { useDispatch, useSelector } from 'react-redux';
 
 export default function Record() {
+  const [loggedIn, setLoggedIn] = useState(false);
+  const dispatch = useDispatch();
+  const userState = useSelector((state) => state.userState.token);
+
+  useEffect(() => {
+    const checkLoginStatus = async () => {
+      if (userState) {
+        setLoggedIn(true);
+      }
+    };
+    checkLoginStatus();
+  }, []);
+
   const [form, setForm] = useState({
     employeeName: "",
     companyId: "",
@@ -87,7 +101,12 @@ export default function Record() {
         saleAmount: "",
         expectedCommission: ""
       });
-      navigate("/");
+      if (loggedIn) {
+        navigate("/admin");
+      } 
+      else {
+        navigate("/");
+      }
     }
   }
 
