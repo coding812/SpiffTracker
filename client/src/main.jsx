@@ -13,6 +13,7 @@ import Record from "./components/Record";
 import AdminPanel from "./components/AdminPanel";
 import Login from "./components/Login";
 import Register from "./components/Register";
+import About from "./components/About";
 import "./index.css";
 
 function Main() {
@@ -39,6 +40,16 @@ function Main() {
         {
           path: "/",
           element: <Record />,
+        },
+      ],
+    },
+    {
+      path: "/about",
+      element: <App />,
+      children: [
+        {
+          path: "/about",
+          element: <About />,
         },
       ],
     },
