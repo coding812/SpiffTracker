@@ -114,12 +114,13 @@ export default function Record() {
   return (
     <>
       <h3 className="text-lg font-semibold p-4">Enter Your Sale Information</h3>
+        <div className= "flex flex-col items-center justify-center ">
         <form
           onSubmit={onSubmit}
-          className="border rounded-lg overflow-hidden p-4"
+          className="flex flex-col border rounded-lg overflow-hidden p-2 w-full items-center justify-center "
         >
-          <div className="grid  grid-cols-1 gap-x-8 gap-y-10 border-b border-slate-900/10 pb-12 md:grid-cols-2">
-            <div className="grid max-w-2xl grid-cols-1 gap-x-6 gap-y-6 ">
+          <div className="flex w-1/2 grid-cols-1 gap-x-8 gap-y-10 border-b border-slate-900/10 pb-12 md:grid-cols-2 justify-center items-center ">
+            <div className="flex-col w-full grid-cols-1 gap-x-4 gap-y-6  ">
               {/* EMPLOYEE NAME */}
               <div className="sm:col-span-4">
                 <label
@@ -129,7 +130,7 @@ export default function Record() {
                   Employee Name
                 </label>
                 <div className="mt-2">
-                  <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-slate-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                  <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-slate-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md w-full ">
                     <input
                       type="text"
                       name="employeeName"
@@ -340,6 +341,7 @@ export default function Record() {
             className="inline-flex items-center justify-center whitespace-nowrap text-md font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-slate-100 hover:text-accent-foreground h-9 rounded-md px-3 cursor-pointer mt-4"
           />
         </form>
+        </div>
     </>
   );
 }
