@@ -15,11 +15,16 @@ import Login from "./components/Login";
 import Register from "./components/Register";
 import About from "./components/About";
 import "./index.css";
+import {useIdleTimer} from 'react-idle-timer';
+
 
 function Main() {
-  const [loggedIn, setLoggedIn] = useState(false);
   const dispatch = useDispatch();
   const userState = useSelector((state) => state.userState.token);
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [state, setState] = useState('Active');
+  const [count, setCount] = useState(0);
+  const [remaining, setRemaining] = useState(0);
   
   
   // Check if the user is logged in when the component mounts
@@ -32,30 +37,37 @@ function Main() {
   //   checkLoginStatus();
   // }, []);
 
+  const onIdle = () => {
+    setState('Idle');
+    setLoggedIn(false);
+    logout();
+  }
+
+  const onActive = () => {
+    setState('Active');
+  }
+
+  const onAction = () => {
+    setCount(count + 1);
+  }
+
+  const { getRemainingTime } = useIdleTimer({
+    onIdle,
+    onActive,
+    onAction,
+    timeout: 1000 * 60 * 30,
+    throttle: 500
+  });
 
   useEffect(() => {
-    const checkLoginStatus = async () => {
-      if (userState) {
-        // Decode the token to get its expiration time
-        const decodedToken = jwtDecode(userState.token);
-        const currentTime = Date.now() / 1000; // Convert to seconds
-  
-        // Check if the token has expired
-        if (decodedToken.exp < currentTime) {
-          // Token has expired, update state accordingly
-          setLoggedIn(false);
-        } else {
-          // Token is still valid
-          setLoggedIn(true);
-        }
-      } else {
-        // No token found, user is not logged in
-        setLoggedIn(false);
-      }
+    const interval = setInterval(() => {
+      setRemaining(Math.ceil(getRemainingTime() / 1000))
+    }, 500);
+
+    return () => {
+      clearInterval(interval)
     };
-  
-    checkLoginStatus();
-  }, [userState]);
+  });
 
   const router = createBrowserRouter([
     {
