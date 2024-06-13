@@ -1,126 +1,173 @@
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { NavLink , useNavigate} from "react-router-dom";
+import { toast } from "react-toastify";
 
-const Record = (props) => (
-  <tr className="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
-    <td className="px-4 py-4 align-middle text-sm font-medium text-muted-foreground">
-      {props.record.companyId}
-    </td>
-    <td className="px-4 py-4 align-middle text-sm font-medium text-muted-foreground">
-      {props.record.employee_name}
-    </td>
-    <td className="px-4 py-4 align-middle text-sm font-medium text-muted-foreground">
-      {props.record.customer_name}
-    </td>
-    <td className="px-4 py-4 align-middle text-sm font-medium text-muted-foreground">
-      {props.record.work_order}
-    </td>
-    <td className="px-4 py-4 align-middle text-sm font-medium text-muted-foreground">
-      {props.record.sale_amount}
-    </td>
-    <td className="px-4 py-4 align-middle text-sm font-medium text-muted-foreground">
-      {props.record.expected_commission}
-    </td>
-    <td className="px-4 py-4 align-middle text-sm font-medium text-muted-foreground">
-      <div className="flex space-x-2">
-        <Link
-          className="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-slate-100 h-9 rounded-md px-3"
-          to={`/edit/${props.record._id}`}
-        >
-          Edit
-        </Link>
-        <button
-          className="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-slate-100 hover:text-accent-foreground h-9 rounded-md px-3"
-          color="red"
-          type="button"
-          onClick={() => {
-            props.deleteRecord(props.record._id);
-          }}
-        >
-          Delete
-        </button>
-      </div>
-    </td>
-  </tr>
-);
+import { useSelector, useDispatch } from 'react-redux';
+import { login, logout } from '../redux/slice';
 
-export default function RecordList() {
-  const [records, setRecords] = useState([]);
+import { CiEdit } from "react-icons/ci";
+import { RiDeleteBinLine} from "react-icons/ri";
+import { FaRegSave } from "react-icons/fa";
+import { ImCancelCircle } from "react-icons/im";
 
-  // This method fetches the records from the database.
-  useEffect(() => {
-    async function getRecords() {
-      const response = await fetch(`http://localhost:5050/record/?companyId=123`);
-      if (!response.ok) {
-        const message = `An error occurred: ${response.statusText}`;
-        console.error(message);
-        return;
-      }
-      const records = await response.json();
-      
-      setRecords(records);
+
+const Record = ({ record, updateRecord, deleteRecord }) => {
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedRecord, setEditedRecord] = useState({ ...record });
+
+  const handleInputChange = (e) => {
+    setEditedRecord({
+      ...editedRecord,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleEditClick = () => {
+    setIsEditing(true);
+  };
+
+  const handleSaveClick = async () => {
+    try {
+      await updateRecord(record._id, editedRecord);
+      toast.success("Sale updated successfully");
+      setIsEditing(false);
+    } 
+    catch (error) {
+      console.error("Error saving record:", error);
     }
-    getRecords();
-    return;
-  }, [records.length]);
+  };
 
-  // This method will delete a record
-  async function deleteRecord(id) {
-    await fetch(`http://localhost:5050/record/${id}`, {
-      method: "DELETE",
-    });
-    const newRecords = records.filter((el) => el._id !== id);
-    setRecords(newRecords);
+  const handleCancelClick = () => {
+    toast.error("Edit cancelled, changes not saved");
+    setIsEditing(false);
+    setEditedRecord(record);
+  };
+
+  if (!record) {
+    return <div>No sales...</div>;
   }
 
-  // This method will map out the records on the table
-  function recordList() {
-    return records.map((record) => {
-      return (
-        <Record
-          record={record}
-          deleteRecord={() => deleteRecord(record._id)}
-          key={record._id}
-        />
-      );
-    });
-  }
-
-  // This following section will display the table with the records of individuals.
   return (
-    <>
-      <h3 className="text-lg font-semibold p-4">Enter your Spiff</h3>
-      <div className="border rounded-lg overflow-hidden">
-        <div className="relative w-full overflow-auto">
-          <table className="w-full caption-bottom text-sm">
-            <thead className="[&amp;_tr]:border-b">
-              <tr className="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
-              <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
-                  Company ID
-                </th>
-                <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
-                  Employee Name
-                </th>
-                <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
-                  Customer Name
-                </th>
-                <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
-                  Work Order #
-                </th>
-                <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
-                  Ticket Total
-                </th>
-                <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
-                  Expected Commission
-                </th>
-              </tr>
-            </thead>
-            <tbody className="[&amp;_tr:last-child]:border-0">
-              {recordList()}
-            </tbody>
-          </table>
+    <tr className="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+      {/* <td className="px-4 py-4 align-middle text-sm font-medium text-muted-foreground">
+        {record.companyId}
+        </td> */}
+      <td className="px-4 py-4 align-middle text-sm font-medium text-muted-foreground">
+        {isEditing ? (
+          <input
+            className="bg-background border border-muted/50 rounded-md px-3 h-9"
+            type="text"
+            name="employeeName"
+            value={editedRecord.employeeName}
+            onChange={handleInputChange}
+          />
+        ) : (
+          record.employeeName
+        )}
+      </td>
+      <td className="px-4 py-4 align-middle text-sm font-medium text-muted-foreground">
+        {isEditing ? (
+          <input
+            className="bg-background border border-muted/50 rounded-md px-3 h-9"
+            type="text"
+            name="customerName"
+            value={editedRecord.customerName}
+            onChange={handleInputChange}
+          />
+        ) : (
+          record.customerName
+        )}
+      </td>
+      <td className="px-4 py-4 align-middle text-sm font-medium text-muted-foreground">
+        {isEditing ? (
+          <input
+            className="bg-background border border-muted/50 rounded-md px-3 h-9"
+            type="text"
+            name="workOrder"
+            value={editedRecord.workOrder}
+            onChange={handleInputChange}
+          />
+        ) : (
+          record.workOrder
+        )}
+      </td>
+      <td className="px-4 py-4 align-middle text-sm font-medium text-muted-foreground">
+        {isEditing ? (
+          <input
+            className="bg-background border border-muted/50 rounded-md px-3 h-9"
+            type="text"
+            name="saleAmount"
+            value={editedRecord.saleAmount}
+            onChange={handleInputChange}
+          />
+        ) : (
+          record.saleAmount
+        )}
+      </td>
+      <td className="px-4 py-4 align-middle text-sm font-medium text-muted-foreground">
+        {isEditing ? (
+          <input
+            className="bg-background border border-muted/50 rounded-md px-3 h-9"
+            type="text"
+            name="expectedCommission"
+            value={editedRecord.expectedCommission}
+            onChange={handleInputChange}
+          />
+        ) : (
+          record.expectedCommission
+        )}
+      </td>
+      <td className="px-4 py-4 align-middle text-sm font-medium text-muted-foreground">
+        <div className="flex space-x-2">
+          {isEditing ? (
+            <>
+              {/* <button
+                className="inline-flex items-center justify-center text-sm font-medium border bg-background hover:bg-slate-100 h-9 rounded-md px-3"
+                onClick={handleSaveClick}
+              >
+                Save
+              </button> */}
+              <button onClick={handleSaveClick} style={{ width: '48px', height: '48px', padding: '10px', border: 'none', background: 'none', cursor: 'pointer' }} >
+                <FaRegSave style={{width: '100%', height: '100%'}} />
+              </button>
+              {/* <button
+                className="inline-flex items-center justify-center text-sm font-medium border bg-background hover:bg-slate-100 h-9 rounded-md px-3"
+                onClick={handleCancelClick}
+              >
+                Cancel
+              </button> */}
+              <button onClick={handleCancelClick} style={{ width: '48px', height: '48px', padding: '10px', border: 'none', background: 'none', cursor: 'pointer' }} >
+                <ImCancelCircle style={{width: '100%', height: '100%'}} />
+              </button>
+            </>
+          ) : (
+            <>
+              {/* <button
+                className="inline-flex items-center justify-center text-sm font-medium border bg-background hover:bg-slate-100 h-9 rounded-md px-3"
+                onClick={handleEditClick}
+              >
+                Edit
+              </button> */}
+              <button onClick={handleEditClick} style={{ width: '48px', height: '48px', padding: '10px', border: 'none', background: 'none', cursor: 'pointer' }} >
+                <CiEdit style={{width: '100%', height: '100%'}} />
+              </button>
+              {/* <button
+                className="inline-flex items-center justify-center text-sm font-medium border bg-background hover:bg-slate-100 h-9 rounded-md px-3"
+                type="button"
+                onClick={() => deleteRecord(record._id)}
+              >
+                Delete
+              </button> */}
+              <button onClick={() => deleteRecord(record._id)} style={{ width: '48px', height: '48px', padding: '10px', border: 'none', background: 'none', cursor: 'pointer' }} >
+                <RiDeleteBinLine style={{width: '100%', height: '100%'}} />
+              </button>
+             
+            </>
+          )}
         </div>
-      </div>
-    </>
+      </td>
+    </tr>
   );
-}
+};
+
+export default Record;

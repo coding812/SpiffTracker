@@ -23,14 +23,39 @@ function Main() {
   
   
   // Check if the user is logged in when the component mounts
+  // useEffect(() => {
+  //   const checkLoginStatus = async () => {
+  //     if (userState) {
+  //       setLoggedIn(true);
+  //     }
+  //   };
+  //   checkLoginStatus();
+  // }, []);
+
+
   useEffect(() => {
     const checkLoginStatus = async () => {
       if (userState) {
-        setLoggedIn(true);
+        // Decode the token to get its expiration time
+        const decodedToken = jwtDecode(userState.token);
+        const currentTime = Date.now() / 1000; // Convert to seconds
+  
+        // Check if the token has expired
+        if (decodedToken.exp < currentTime) {
+          // Token has expired, update state accordingly
+          setLoggedIn(false);
+        } else {
+          // Token is still valid
+          setLoggedIn(true);
+        }
+      } else {
+        // No token found, user is not logged in
+        setLoggedIn(false);
       }
     };
+  
     checkLoginStatus();
-  }, []);
+  }, [userState]);
 
   const router = createBrowserRouter([
     {
