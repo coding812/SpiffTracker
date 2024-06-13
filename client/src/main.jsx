@@ -25,17 +25,6 @@ function Main() {
   const [state, setState] = useState('Active');
   const [count, setCount] = useState(0);
   const [remaining, setRemaining] = useState(0);
-  
-  
-  // Check if the user is logged in when the component mounts
-  // useEffect(() => {
-  //   const checkLoginStatus = async () => {
-  //     if (userState) {
-  //       setLoggedIn(true);
-  //     }
-  //   };
-  //   checkLoginStatus();
-  // }, []);
 
   const onIdle = () => {
     setState('Idle');
@@ -55,7 +44,8 @@ function Main() {
     onIdle,
     onActive,
     onAction,
-    timeout: 1000 * 60 * 30,
+    // timeout: 1000 * 60 * 30,
+    timeout: 10000,
     throttle: 500
   });
 

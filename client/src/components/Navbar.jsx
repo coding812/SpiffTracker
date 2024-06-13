@@ -21,11 +21,12 @@ export default function Navbar() {
   useEffect(() => {
     const checkLoggedInStatus = () => {
       if (!loggedIn){
-        navigate('/login');
+        
       }
     };
     checkLoggedInStatus();
-    const intervalId = setInterval(checkLoggedInStatus, 1000 * 60 * 30); 
+    // const intervalId = setInterval(checkLoggedInStatus, 1000 * 60 * 30); 
+    const intervalId = setInterval(checkLoggedInStatus, 10000); 
     return () => clearInterval(intervalId);
   }, [loggedIn, navigate]); 
 
@@ -43,18 +44,18 @@ export default function Navbar() {
   return (
     <div className="">
       <nav className="flex items-center mb-6">
-        <NavLink className="inline-flex items-center justify-center whitespace-nowrap text-md font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-slate-100 h-9 rounded-md px-3 mr-3" to={homePath}>
+        <NavLink className="inline-flex items-center justify-center whitespace-nowrap text-md font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-indigo-600 hover:bg-indigo-500 text-white h-9 rounded-md px-3 mr-3" to={homePath}>
           Home
         </NavLink>
         
-        <NavLink className="inline-flex items-center justify-center whitespace-nowrap text-md font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-slate-100 h-9 rounded-md px-3 mr-3" to="/about">
+        <NavLink className="inline-flex items-center justify-center whitespace-nowrap text-md font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-indigo-600 hover:bg-indigo-500 text-white h-9 rounded-md px-3 mr-3" to="/about">
           About
         </NavLink>
 
         <div className="flex-grow"></div>
 
       {buttonVisible ? (
-        <NavLink className="inline-flex items-center justify-center whitespace-nowrap text-md font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-slate-100 h-9 rounded-md px-3" to={linkPath}
+        <NavLink className="inline-flex items-center justify-center whitespace-nowrap text-md font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-indigo-600 hover:bg-indigo-500 text-white h-9 rounded-md px-3" to={linkPath}
               onClick={() => loggedIn ? handleLogout() : null}>
           {linkText}
         </NavLink>
