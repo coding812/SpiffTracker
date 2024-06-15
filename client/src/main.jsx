@@ -44,8 +44,8 @@ function Main() {
     onIdle,
     onActive,
     onAction,
-    // timeout: 1000 * 60 * 30,
-    timeout: 10000,
+    timeout: 1000 * 60 * 30,
+    // timeout: 10000,
     throttle: 500
   });
 
