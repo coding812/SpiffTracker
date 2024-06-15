@@ -8,3 +8,7 @@ npm start or nodemon .\server\
 cd mern/client
 npm install
 npm run dev
+
+for local development:
+    change baseUrl in baseUrl.js to http://localhost:5050 
+    comment out line 9-13 in server.js 

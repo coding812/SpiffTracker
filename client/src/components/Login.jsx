@@ -2,8 +2,9 @@ import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
 import { login, logout } from '../redux/slice';
-
 import { toast } from 'react-toastify';
+
+import  BaseUrl  from './BaseUrl';
 
 const Login = (props) => {
   
@@ -17,7 +18,7 @@ const Login = (props) => {
     const password = document.getElementById('password').value;
 
     try{
-      const response = await fetch('http://localhost:5050/users/login', {
+      const response = await fetch(`${BaseUrl}/users/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

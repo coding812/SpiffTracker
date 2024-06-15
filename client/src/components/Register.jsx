@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
+import  BaseUrl  from './BaseUrl';
+
 const Register = () => {
     const [form, setForm] = useState({
         firstName: "",
@@ -16,7 +18,7 @@ const Register = () => {
 
     useEffect(() => {
         if (params.id) {
-            fetch(`http://localhost:5050/user/register/${params.id}`)
+            fetch(`${BaseUrl}/user/register/${params.id}`)
                 .then((res) => res.json())
                 .then((data) => {
                     setForm(data);
@@ -50,7 +52,7 @@ const Register = () => {
         try {
             let response;
             if (isNew) {
-                response = await fetch("http://localhost:5050/users/register", {
+                response = await fetch(`${BaseUrl}/users/register`, {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",

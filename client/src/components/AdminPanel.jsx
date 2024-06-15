@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { NavLink , useNavigate} from "react-router-dom";
 import { toast } from "react-toastify";
-
 import { useSelector, useDispatch } from 'react-redux';
 import Record from "./RecordList";
+import  BaseUrl  from "./BaseUrl";
+
 const AdminPanel = () => {
   const [records, setRecords] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -23,7 +24,7 @@ const AdminPanel = () => {
 
   // Update sale in the database
   const updateRecord = async (id, updatedRecord) => {
-    const response = await fetch(`http://localhost:5050/record/${id}`, {
+    const response = await fetch(`${BaseUrl}/record/${id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -39,7 +40,7 @@ const AdminPanel = () => {
 
   // Get all sales from the database associated with the companyId
   const getRecords = async () => {
-    const response = await fetch(`http://localhost:5050/record?companyId=${companyId}`, {
+    const response = await fetch(`${BaseUrl}/record?companyId=${companyId}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -75,7 +76,7 @@ const AdminPanel = () => {
       return;
     }
 
-    await fetch(`http://localhost:5050/record/${id}`, {
+    await fetch(`${BaseUrl}/record/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
