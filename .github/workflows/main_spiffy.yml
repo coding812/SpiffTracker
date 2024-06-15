@@ -32,6 +32,12 @@ jobs:
             echo "JWT_SECRET=${{secrets.JWT_SECRET}}" >> .env
             echo "NODE_ENV=production" >> .env
 
+      - name: Upload .env file as an artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: env-file
+          path: .env      
+
       - name: Compress artifact for deployment
         run: tar -czvf release.tar.gz ./*
 
@@ -49,6 +55,12 @@ jobs:
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
 
     steps:
+      - name: Upload .env file as an artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: env-file
+          path: .env
+          
       - name: Download artifact from build job
         uses: actions/download-artifact@v3
         with:
