@@ -32,7 +32,7 @@ jobs:
             echo "JWT_SECRET=${{secrets.JWT_SECRET}}" >> .env
             echo "NODE_ENV=production" >> .env
 
-      - name: Tar artifact for deployment
+      - name: Compress artifact for deployment
         run: tar -czvf release.tar.gz ./*
 
       - name: Upload artifact for deployment job
@@ -54,8 +54,8 @@ jobs:
         with:
           name: node-app
 
-      - name: Unzip artifact for deployment
-        run: unzip release.zip
+      - name: Uncompress artifact for deployment
+        run: tar -xzvf release.tar.gz
 
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
