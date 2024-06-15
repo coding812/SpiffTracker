@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import records from "./server/routes/sales.js";
 import users from "./server/routes/users.js";
+import path from "path";
 
 const PORT = process.env.PORT || "";
 const app = express();
