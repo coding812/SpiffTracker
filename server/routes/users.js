@@ -65,7 +65,7 @@ router.post("/register", async (req, res) => {
         let collection = db.collection("users");
         let result = await collection.insertOne(newDocument);
         console.table(newDocument);
-        res.send(result).status(204);
+        res.send.status(204)(result);
     }
     catch (err) 
     {
