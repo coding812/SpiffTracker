@@ -5,6 +5,7 @@ import { login, logout } from '../redux/slice';
 import { toast } from 'react-toastify';
 
 import  BaseUrl  from './BaseUrl';
+import {motion} from "framer-motion";
 
 const Login = (props) => {
   
@@ -47,7 +48,13 @@ const Login = (props) => {
 
   return (
     <>
-      <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+      <motion.div 
+        initial={{ opacity: 0, x: -100 }}
+        animate={{ opacity: 1, x: 0 }}
+        exit={{ opacity: 0, x: 100 }}
+        transition={{ duration: 0.45 }}
+        
+      className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
             Sign in to your account
@@ -113,7 +120,7 @@ const Login = (props) => {
             </a>
           </p>
         </div>
-      </div>
+      </motion.div>
     </>
   );
 };

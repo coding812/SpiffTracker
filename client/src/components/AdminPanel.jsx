@@ -4,6 +4,24 @@ import { toast } from "react-toastify";
 import { useSelector, useDispatch } from 'react-redux';
 import Record from "./RecordList";
 import  BaseUrl  from "./BaseUrl";
+import {motion} from "framer-motion";
+// FRAMER MOTION ANIMATION
+const container = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      delay: 0.2,
+      when: "beforeChildren",
+      staggerChildren: 0.1,
+    },
+  },
+};
+
+const item = {
+  hidden: { y: 20, opacity: 0 },
+  visible: { y: 0, opacity: 1 },
+};
 
 const AdminPanel = () => {
   const [records, setRecords] = useState([]);
@@ -95,12 +113,13 @@ const AdminPanel = () => {
       return null;
     }
     return records.map((record, id) => (
-      <Record
+        <Record
         key={id}
         record={record}
         deleteRecord={deleteRecord}
         updateRecord={updateRecord}
-      />
+        />
+        
     ));
   };
 
@@ -120,7 +139,11 @@ const AdminPanel = () => {
           Enter Sale
         </NavLink>
       </div>
-
+      <motion.div
+        variants={container}
+        initial="hidden"
+        animate="visible"
+      >
       <div className="border rounded-lg overflow-hidden">
         <div className="relative w-full overflow-auto">
           <table className="w-full text-sm">
@@ -129,7 +152,7 @@ const AdminPanel = () => {
                 {/* <th className="h-12 px-4 text-left font-medium text-muted-foreground">
                   Company ID
                 </th> */}
-                <th className="h-12 px-4 text-left font-medium text-muted-foreground">
+                <th className="h-12 px-4  font-medium text-muted-foreground">
                   Employee Name
                 </th>
                 <th className="h-12 px-4 text-left font-medium text-muted-foreground">
@@ -146,11 +169,12 @@ const AdminPanel = () => {
                 </th>
               </tr>
             </thead>
-            <tbody>{recordList()}</tbody>
+
+              <tbody>{recordList()}</tbody>
           </table>
         </div>
       </div>
-      
+      </motion.div>
     </>
   );
 };

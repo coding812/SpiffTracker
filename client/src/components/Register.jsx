@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-
+import { motion } from "framer-motion";
 import  BaseUrl  from './BaseUrl';
 
 const Register = () => {
@@ -37,7 +37,7 @@ const Register = () => {
 
     // TODO: Figure out why this is not navigating to login page after successful registration
     
-    // TODO: Figure out how to keep form from resetting after successful registration
+    // TODO: Figure out how to keep form from resetting after unsuccessful registration
 
     // TODO: Figure out how to display error messages from the server, toasts not showing in production
 
@@ -103,15 +103,20 @@ const Register = () => {
 
     return (
         <>
-            <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+            <motion.div 
+            initial={{ opacity: 0, x: -100 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: 100 }}
+            transition={{ duration: 0.45 }}
+            className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
                 <div className="sm:mx-auto sm:w-full sm:max-w-sm">
                     <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
                         Register your account
                     </h2>
                 </div>
-                <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+                <div className="mt-2 sm:mx-auto sm:w-full sm:max-w-sm">
                     <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-                        <form className="space-y-6" action="#" method="POST" onSubmit={onSubmit}>
+                        <form className="space-y-2" action="#" method="POST" onSubmit={onSubmit}>
                             <div>
                                 <label htmlFor="first-name" className="block text-sm font-medium leading-6 text-gray-900">
                                     First name
@@ -236,7 +241,7 @@ const Register = () => {
                         </p>
                     </div>
                 </div>
-            </div>
+            </motion.div>
         </>
     );
 

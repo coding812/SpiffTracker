@@ -1,9 +1,14 @@
-
+import {motion} from 'framer-motion';
 
 export default function About() {
     return (
         <>
-            <div className="container mx-auto px-4  space-y-6">
+            <motion.div 
+            initial={{ opacity: 0, x: -100 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: 100 }}
+            transition={{ duration: 0.45 }}
+            className="container mx-auto px-4  space-y-6">
                 <h1>About</h1>
                 <p className="indent-8">
                     I've decided to build out my commission tracker, a straightforward way to bridge the gap between employees and managers who need to communicate about sales made in the field, that has previously been filled by either expensive software, or paper commission sheets.
@@ -25,7 +30,7 @@ export default function About() {
                 <p className="indent-8">
                     What I'm building is intended to solve the above problems, with a focus on the trades, and smaller companies who do not, or more often cannot, spend a lot of money on something that could be solved with a piece of paper, but still wish to modernize their workflow.
                 </p>
-            </div>
+            </motion.div>
         </>
     );
 }

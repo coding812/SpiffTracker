@@ -10,6 +10,24 @@ import { RiDeleteBinLine} from "react-icons/ri";
 import { FaRegSave } from "react-icons/fa";
 import { ImCancelCircle } from "react-icons/im";
 
+import {motion} from "framer-motion";
+
+const container = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      delay: 0.1,
+      when: "beforeChildren",
+      staggerChildren: 0.05,
+    },
+  },
+};
+
+const item = {
+  hidden: { y: 20, opacity: 0 },
+  visible: { y: 0, opacity: 1 },
+};
 
 const Record = ({ record, updateRecord, deleteRecord }) => {
   const [isEditing, setIsEditing] = useState(false);
@@ -48,11 +66,18 @@ const Record = ({ record, updateRecord, deleteRecord }) => {
   }
 
   return (
-    <tr className="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
-      {/* <td className="px-4 py-4 align-middle text-sm font-medium text-muted-foreground">
-        {record.companyId}
-        </td> */}
-      <td className="px-4 py-4 align-middle text-sm font-medium text-muted-foreground">
+    
+    <motion.tr 
+    variants={container}
+    initial="hidden"
+    animate="visible"
+
+    className="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted"
+    >
+      
+      <motion.td 
+      variants={item}
+      className="px-4 py-4 align-middle text-sm font-medium text-muted-foreground">
         {isEditing ? (
           <input
             className="bg-background border border-muted/50 rounded-md px-3 h-9"
@@ -64,8 +89,10 @@ const Record = ({ record, updateRecord, deleteRecord }) => {
         ) : (
           record.employeeName
         )}
-      </td>
-      <td className="px-4 py-4 align-middle text-sm font-medium text-muted-foreground">
+      </motion.td>
+      <motion.td 
+      variants={item}
+      className="px-4 py-4 align-middle text-sm font-medium text-muted-foreground">
         {isEditing ? (
           <input
             className="bg-background border border-muted/50 rounded-md px-3 h-9"
@@ -77,8 +104,10 @@ const Record = ({ record, updateRecord, deleteRecord }) => {
         ) : (
           record.customerName
         )}
-      </td>
-      <td className="px-4 py-4 align-middle text-sm font-medium text-muted-foreground">
+      </motion.td>
+      <motion.td 
+      variants={item}
+      className="px-4 py-4 align-middle text-sm font-medium text-muted-foreground">
         {isEditing ? (
           <input
             className="bg-background border border-muted/50 rounded-md px-3 h-9"
@@ -90,8 +119,10 @@ const Record = ({ record, updateRecord, deleteRecord }) => {
         ) : (
           record.workOrder
         )}
-      </td>
-      <td className="px-4 py-4 align-middle text-sm font-medium text-muted-foreground">
+      </motion.td>
+      <motion.td 
+      variants={item}
+      className="px-4 py-4 align-middle text-sm font-medium text-muted-foreground">
         {isEditing ? (
           <input
             className="bg-background border border-muted/50 rounded-md px-3 h-9"
@@ -103,8 +134,10 @@ const Record = ({ record, updateRecord, deleteRecord }) => {
         ) : (
           record.saleAmount
         )}
-      </td>
-      <td className="px-4 py-4 align-middle text-sm font-medium text-muted-foreground">
+      </motion.td>
+      <motion.td 
+      variants={item}
+      className="px-4 py-4 align-middle text-sm font-medium text-muted-foreground">
         {isEditing ? (
           <input
             className="bg-background border border-muted/50 rounded-md px-3 h-9"
@@ -116,48 +149,29 @@ const Record = ({ record, updateRecord, deleteRecord }) => {
         ) : (
           record.expectedCommission
         )}
-      </td>
-      <td className="px-4 py-4 align-middle text-sm font-medium text-muted-foreground">
+      </motion.td>
+      <motion.td 
+      variants={item}
+      className="px-4 py-4 align-middle text-sm font-medium text-muted-foreground">
         <div className="flex space-x-2">
           {isEditing ? (
             <>
-              {/* <button
-                className="inline-flex items-center justify-center text-sm font-medium border bg-background hover:bg-slate-100 h-9 rounded-md px-3"
-                onClick={handleSaveClick}
-              >
-                Save
-              </button> */}
+              
               <button onClick={handleSaveClick} style={{ width: '48px', height: '48px', padding: '10px', border: 'none', background: 'none', cursor: 'pointer' }} >
                 <FaRegSave style={{width: '100%', height: '100%'}} />
               </button>
-              {/* <button
-                className="inline-flex items-center justify-center text-sm font-medium border bg-background hover:bg-slate-100 h-9 rounded-md px-3"
-                onClick={handleCancelClick}
-              >
-                Cancel
-              </button> */}
+              
               <button onClick={handleCancelClick} style={{ width: '48px', height: '48px', padding: '10px', border: 'none', background: 'none', cursor: 'pointer' }} >
                 <ImCancelCircle style={{width: '100%', height: '100%'}} />
               </button>
             </>
           ) : (
             <>
-              {/* <button
-                className="inline-flex items-center justify-center text-sm font-medium border bg-background hover:bg-slate-100 h-9 rounded-md px-3"
-                onClick={handleEditClick}
-              >
-                Edit
-              </button> */}
+              
               <button onClick={handleEditClick} style={{ width: '48px', height: '48px', padding: '10px', border: 'none', background: 'none', cursor: 'pointer' }} >
                 <CiEdit style={{width: '100%', height: '100%'}} />
               </button>
-              {/* <button
-                className="inline-flex items-center justify-center text-sm font-medium border bg-background hover:bg-slate-100 h-9 rounded-md px-3"
-                type="button"
-                onClick={() => deleteRecord(record._id)}
-              >
-                Delete
-              </button> */}
+              
               <button onClick={() => deleteRecord(record._id)} style={{ width: '48px', height: '48px', padding: '10px', border: 'none', background: 'none', cursor: 'pointer' }} >
                 <RiDeleteBinLine style={{width: '100%', height: '100%'}} />
               </button>
@@ -165,8 +179,8 @@ const Record = ({ record, updateRecord, deleteRecord }) => {
             </>
           )}
         </div>
-      </td>
-    </tr>
+      </motion.td>
+    </motion.tr>
   );
 };
 

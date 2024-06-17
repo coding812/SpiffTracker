@@ -2,8 +2,27 @@ import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { toast } from 'react-toastify';
 import { useDispatch, useSelector } from 'react-redux';
-
+import {motion} from 'framer-motion';
 import  BaseUrl  from './BaseUrl';
+
+
+// FRAMER MOTION ANIMATION
+const container = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      delay: 0.1,
+      when: "beforeChildren",
+      staggerChildren: 0.1,
+    },
+  },
+};
+
+const item = {
+  hidden: { y: 20, opacity: 0 },
+  visible: { y: 0, opacity: 1 },
+};
 
 export default function Record() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -111,11 +130,15 @@ export default function Record() {
       }
     }
   }
-
-  // This following section will display the form that takes the input from the user.
+  
   return (
     <>
       <h3 className="text-lg font-semibold p-4">Enter Your Sale Information</h3>
+      <motion.div
+        variants={container}
+        initial="hidden"
+        animate="visible">
+
       <div className="flex flex-col items-center justify-center ">
         <form
           onSubmit={onSubmit}
@@ -124,6 +147,7 @@ export default function Record() {
           <div className="flex w-full grid-cols-1 gap-x-8 gap-y-10 border-b border-slate-900/10 pb-12  justify-center items-center ">
             <div className="flex-col w-full grid-cols-1 gap-x-4 gap-y-6  ">
               {/* EMPLOYEE NAME */}
+              <motion.div variants={item}>
               <div className="">
                 <label
                   htmlFor="employeeName"
@@ -146,7 +170,9 @@ export default function Record() {
                   </div>
                 </div>
               </div>
+              </motion.div>
               {/* COMPANY ID NUMBER */}
+              <motion.div variants={item}>
               <div className="sm:col-span-4">
                 <label
                   htmlFor="companyId"
@@ -169,7 +195,9 @@ export default function Record() {
                   </div>
                 </div>
               </div>
+              </motion.div>
               {/* DATE OF SALE */}
+              <motion.div variants={item}>
               <div className="sm:col-span-4">
                 <label
                   htmlFor="dateOfSale"
@@ -191,7 +219,9 @@ export default function Record() {
                   </div>
                 </div>
               </div>
+              </motion.div>
               {/* JOB COMPLETED */}
+              <motion.div variants={item}>
               <div className="sm:col-span-4">
                 <label
                   htmlFor="jobCompleted"
@@ -213,7 +243,9 @@ export default function Record() {
                   </div>
                 </div>
               </div>
+              </motion.div>
               {/* CUSTOMER NAME */}
+              <motion.div variants={item}>
               <div className="sm:col-span-4">
                 <label
                   htmlFor="customerName"
@@ -236,7 +268,9 @@ export default function Record() {
                   </div>
                 </div>
               </div>
+              </motion.div>
               {/* WORK ORDER / INVOICE # */}
+              <motion.div variants={item}>
               <div className="sm:col-span-4">
                 <label
                   htmlFor="workOrder"
@@ -259,7 +293,9 @@ export default function Record() {
                   </div>
                 </div>
               </div>
+              </motion.div>
               {/* SALE DESCRIPION */}
+              <motion.div variants={item}>
               <div className="sm:col-span-4">
                 <label
                   htmlFor="saleDescription"
@@ -282,7 +318,9 @@ export default function Record() {
                   </div>
                 </div>
               </div>
+              </motion.div>
               {/* SALE AMOUNT */}
+              <motion.div variants={item}>
               <div className="sm:col-span-4">
                 <label
                   htmlFor="saleAmount"
@@ -310,7 +348,9 @@ export default function Record() {
                   </div>
                 </div>
               </div>
+              </motion.div>
               {/* EXPECTED COMMISSION */}
+              <motion.div variants={item}>
               <div className="sm:col-span-4">
                 <label
                   htmlFor="expectedCommission"
@@ -338,15 +378,20 @@ export default function Record() {
                   </div>
                 </div>
               </div>
+              </motion.div>
             </div>
           </div>
+          {/* SUBMIT BUTTON */}
+          <motion.div variants={item}>
           <input
             type="submit"
             value="Save Sale Information"
             className="inline-flex items-center justify-center whitespace-nowrap text-md font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-indigo-600 hover:bg-indigo-500 text-white hover:text-accent-foreground h-9 rounded-md px-3 cursor-pointer mt-4"
           />
+          </motion.div>
         </form>
       </div>
+      </motion.div>
     </>
   );
 }
