@@ -162,7 +162,8 @@ export default function Record() {
                       name="employeeName"
                       id="employeeName"
                       required
-                      className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-slate-900 placeholder:text-slate-400 focus:ring-0 sm:text-sm sm:leading-6"
+                      className="block w-full rounded-md border-0 py-1.5 pl-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      
                       placeholder="First and Last"
                       value={form.employeeName}
                       onChange={(e) => updateForm({ employeeName: e.target.value })}
@@ -187,7 +188,7 @@ export default function Record() {
                       name="companyId"
                       id="companyId"
                       required
-                      className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-slate-900 placeholder:text-slate-400 focus:ring-0 sm:text-sm sm:leading-6"
+                      className="block w-full rounded-md border-0 py-1.5 pl-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       placeholder="Company ID Number"
                       value={form.companyId}
                       onChange={(e) => updateForm({ companyId: e.target.value })}
@@ -212,7 +213,7 @@ export default function Record() {
                       name="dateOfSale"
                       id="dateOfSale"
                       required
-                      className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-slate-900 placeholder:text-slate-400 focus:ring-0 sm:text-sm sm:leading-6"
+                      className="block w-full rounded-md border-0 py-1.5 pl-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       value={form.dateOfSale}
                       onChange={(e) => updateForm({ dateOfSale: e.target.value })}
                     />
@@ -236,7 +237,7 @@ export default function Record() {
                       name="jobCompleted"
                       id="jobCompleted"
                       required
-                      className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-slate-900 placeholder:text-slate-400 focus:ring-0 sm:text-sm sm:leading-6"
+                      className="block w-full rounded-md border-0 py-1.5 pl-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       value={form.jobCompleted}
                       onChange={(e) => updateForm({ jobCompleted: e.target.value })}
                     />
@@ -260,7 +261,7 @@ export default function Record() {
                       name="customerName"
                       id="customerName"
                       required
-                      className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-slate-900 placeholder:text-slate-400 focus:ring-0 sm:text-sm sm:leading-6"
+                      className="block w-full rounded-md border-0 py-1.5 pl-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       placeholder="First and Last"
                       value={form.customerName}
                       onChange={(e) => updateForm({ customerName: e.target.value })}
@@ -285,7 +286,7 @@ export default function Record() {
                       name="workOrder"
                       id="workOrder"
                       required
-                      className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-slate-900 placeholder:text-slate-400 focus:ring-0 sm:text-sm sm:leading-6"
+                      className="block w-full rounded-md border-0 py-1.5 pl-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       placeholder="Work Order or Invoice #"
                       value={form.workOrder}
                       onChange={(e) => updateForm({ workOrder: e.target.value })}
@@ -310,7 +311,7 @@ export default function Record() {
                       name="saleDescription"
                       id="saleDescription"
                       required
-                      className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-slate-900 placeholder:text-slate-400 focus:ring-0 sm:text-sm sm:leading-6"
+                      className="block w-full rounded-md border-0 py-1.5 pl-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       placeholder=" Brief Sale Description"
                       value={form.saleDescription}
                       onChange={(e) => updateForm({ saleDescription: e.target.value })}
@@ -335,7 +336,7 @@ export default function Record() {
                       name="saleAmount"
                       id="saleAmount"
                       required
-                      className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-slate-900 placeholder:text-slate-400 focus:ring-0 sm:text-sm sm:leading-6"
+                      className="block w-full rounded-md border-0 py-1.5 pl-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       placeholder="Sale Amount"
                       value={form.saleAmount}
                       onChange={(e) => {
@@ -365,7 +366,7 @@ export default function Record() {
                       name="expectedCommission"
                       id="expectedCommission"
                       required
-                      className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-slate-900 placeholder:text-slate-400 focus:ring-0 sm:text-sm sm:leading-6"
+                      className="block w-full rounded-md border-0 py-1.5 pl-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       placeholder="Expected Commission"
                       value={form.expectedCommission}
                       onChange={(e) => {
