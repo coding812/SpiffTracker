@@ -80,7 +80,7 @@ const Record = ({ record, updateRecord, deleteRecord }) => {
       className="px-4 py-4 align-middle text-sm font-medium text-muted-foreground">
         {isEditing ? (
           <input
-            className="bg-background border border-muted/50 rounded-md px-3 h-9"
+            className="bg-background border border-muted/50 rounded-md px-2 h-9"
             type="text"
             name="employeeName"
             value={editedRecord.employeeName}

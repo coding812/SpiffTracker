@@ -133,7 +133,7 @@ const AdminPanel = () => {
         </button>
         {showModal && <NewSale closeModal={() => setShowModal(false)} />} */}
         <NavLink
-          className="inline-flex items-center justify-center text-md font-medium border bg-background hover:bg-slate-100 h-9 rounded-md px-3"
+          className="inline-flex items-center justify-center whitespace-nowrap text-md font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-indigo-600 hover:bg-indigo-500 text-white h-9 rounded-md px-3 mr-3"
           to="/"
         >
           Enter Sale
@@ -149,23 +149,20 @@ const AdminPanel = () => {
           <table className="w-full text-sm">
             <thead>
               <tr className="border-b hover:bg-muted/50 data-[state=selected]:bg-muted">
-                {/* <th className="h-12 px-4 text-left font-medium text-muted-foreground">
-                  Company ID
-                </th> */}
-                <th className="h-12 px-4  font-medium text-muted-foreground">
+                <th className="h-18 px-4 text-left font-medium text-muted-foreground">
                   Employee Name
                 </th>
-                <th className="h-12 px-4 text-left font-medium text-muted-foreground">
+                <th className="h-18 px-4 text-left font-medium text-muted-foreground">
                   Customer Name
                 </th>
-                <th className="h-12 px-4 text-left font-medium text-muted-foreground">
+                <th className="h-18 px-4 text-left font-medium text-muted-foreground">
                   Work Order #
                 </th>
-                <th className="h-12 px-4 text-left font-medium text-muted-foreground">
+                <th className="h-18 px-4 text-left font-medium text-muted-foreground">
                   Ticket Total
                 </th>
-                <th className="h-12 px-4 text-left font-medium text-muted-foreground">
-                  Expected Commission
+                <th className="h-18 px-4 text-left font-medium text-muted-foreground">
+                  Commission
                 </th>
               </tr>
             </thead>
