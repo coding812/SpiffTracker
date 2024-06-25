@@ -152,19 +152,19 @@ const AdminPanel = () => {
           <table className="w-full text-sm">
             <thead>
               <tr className="border-b hover:bg-muted/50 data-[state=selected]:bg-muted">
-                <th className="h-18 px-4 text-left font-medium text-muted-foreground">
+                <th className="h-14 px-4 text-left font-medium text-muted-foreground">
                   Employee Name
                 </th>
-                <th className="h-18 px-4 text-left font-medium text-muted-foreground">
+                <th className="h-14 px-4 text-left font-medium text-muted-foreground">
                   Customer Name
                 </th>
-                <th className="h-18 px-4 text-left font-medium text-muted-foreground">
+                <th className="h-14 px-4 text-left font-medium text-muted-foreground">
                   Work Order #
                 </th>
-                <th className="h-18 px-4 text-left font-medium text-muted-foreground">
+                <th className="h-14 px-4 text-left font-medium text-muted-foreground">
                   Ticket Total
                 </th>
-                <th className="h-18 px-4 text-left font-medium text-muted-foreground">
+                <th className="h-14 px-4 text-left font-medium text-muted-foreground">
                   Commission
                 </th>
               </tr>
