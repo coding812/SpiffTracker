@@ -8,9 +8,12 @@ import Footer from "./components/Footer";
 
 const App = () => {
   return (
-    <div className="w-full p-6">
+    <div className="w-full p-6 flex flex-col min-h-screen">
       <Navbar />
-      <Outlet />
+      <div className="flex-grow">
+        <Outlet />
+      </div>
+      
       <Footer />
       <ToastContainer />
     </div>
