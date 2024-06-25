@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
-import { useParams, useNavigate } from "react-router-dom";
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from 'react-redux';
 import { login, logout } from '../redux/slice';
 import { toast } from 'react-toastify';
 
@@ -11,6 +11,14 @@ const Login = (props) => {
   
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const userState = useSelector((state) => state.userState); 
+
+  useEffect(() => {
+    if (userState.token) {
+      navigate('/admin');
+      toast.success('Login successful');
+    }
+  }, [userState.token, navigate]);
 
   // Define the onSubmit function to handle form submission and login logic
   async function onSubmit(e) {
@@ -34,10 +42,12 @@ const Login = (props) => {
         throw new Error(data.message || 'Error logging in');
       }
 
-      dispatch(login({token: data.accessToken, user: data.user}));
-      // Navigate to the admin page 
-      navigate('/admin');
-      toast.success('Login successful');
+      dispatch(login({token: data.accessToken, user: data.user, jwtExpiration: data.jwtExpiration}));
+
+      setTimeout(() => {
+        dispatch(logout());
+      }, data.jwtExpiration * 1000);
+    
     }
     catch (error) {
       // Log and show an error toast message if login fails

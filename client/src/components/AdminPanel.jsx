@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import Record from "./RecordList";
 import  BaseUrl  from "./BaseUrl";
 import {motion} from "framer-motion";
+
 // FRAMER MOTION ANIMATION
 const container = {
   hidden: { opacity: 0 },
@@ -32,13 +33,17 @@ const AdminPanel = () => {
   const userState = useSelector((state) => state.userState);
   const dispatch = useDispatch();
 
-  const companyId = userState.user.companyId;
+  useEffect(() => {
+    if (!userState.token) {
+      navigate('/login');
+      toast.error('Please log back in to continue');
+    }
+  }, [userState.token, navigate]);
+
+  const companyId = userState.user ? userState.user.companyId : null;
   const accessToken = userState.token;
 
-  if (!userState) {
-    navigate('/login');
-    return null; 
-  }
+  
 
   // Update sale in the database
   const updateRecord = async (id, updatedRecord) => {
@@ -81,8 +86,10 @@ const AdminPanel = () => {
 
   // Update the records when the companyId changes
   useEffect(() => {
-    getRecords();
-  }, [companyId]);
+    if (userState.token && companyId){
+      getRecords();
+    }
+  }, [userState.token, companyId]);
 
   // Delete a record from the database
   const deleteRecord = async (id) => {
@@ -127,11 +134,7 @@ const AdminPanel = () => {
     <>
       <div className="flex justify-between items-center mb-2">
         <h3 className="text-lg font-semibold p-4">Previous Sales</h3>
-        {/* <button className="inline-flex items-center justify-center text-sm font-medium border bg-background hover:bg-slate-100 h-9 rounded-md px-3"
-          onClick={() => setShowModal(true)}>
-            Enter Sale
-        </button>
-        {showModal && <NewSale closeModal={() => setShowModal(false)} />} */}
+        
         <NavLink
           className="inline-flex items-center justify-center whitespace-nowrap text-md font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-indigo-600 hover:bg-indigo-500 text-white h-9 rounded-md px-3 mr-3"
           to="/"

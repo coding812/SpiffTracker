@@ -26,7 +26,8 @@ router.post("/login", async (req, res) => {
             return res.status(401).send("Invalid password")
         };
         const accessToken = jwt.sign(user, process.env.JWT_SECRET, {expiresIn: "1800s"}) 
-        res.status(200).send({user, accessToken})
+        const jwtExpiration = 1800;
+        res.status(200).send({user, accessToken, jwtExpiration})
     }
     catch (err) {
         console.error(err);
