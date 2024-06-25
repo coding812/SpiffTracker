@@ -24,6 +24,8 @@ const item = {
   visible: { y: 0, opacity: 1 },
 };
 
+
+
 export default function Record() {
   const [loggedIn, setLoggedIn] = useState(false);
   const dispatch = useDispatch();
@@ -133,13 +135,19 @@ export default function Record() {
   
   return (
     <>
-      <h3 className="text-lg font-semibold p-4">Enter Your Sale Information</h3>
+      <motion.div 
+      initial={{ x: -1000 }}
+      animate={{ x: 0 }}
+      transition={{ type: "spring", stiffness: 100 }}>
+        
+      </motion.div>
       <motion.div
         variants={container}
         initial="hidden"
         animate="visible">
 
-      <div className="flex flex-col items-center justify-center ">
+      <div className="flex flex-col items-center justify-center">
+        <h1 className="h-16 bg-muted text-black text-2xl font-semibold">Enter your sale information</h1>
         <form
           onSubmit={onSubmit}
           className="flex flex-col  border rounded-lg overflow-hidden p-2 w-full sm:w-3/4 md:w-1/2 lg:w-1/4 items-center justify-center "
