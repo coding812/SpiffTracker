@@ -136,7 +136,7 @@ const AdminPanel = () => {
         <h3 className="text-lg font-semibold p-4">Previous Sales</h3>
         
         <NavLink
-          className="inline-flex items-center justify-center whitespace-nowrap text-md font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-indigo-600 hover:bg-indigo-500 text-white h-9 rounded-md px-3 mr-3"
+          className="inline-flex items-center justify-center whitespace-nowrap text-md font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50  bg-indigo-600 hover:bg-indigo-500 text-white h-9 rounded-md px-3 mr-3"
           to="/"
         >
           Enter Sale
