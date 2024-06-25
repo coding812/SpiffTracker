@@ -1,12 +1,10 @@
 import * as React from "react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import * as ReactDOM from "react-dom/client";
 import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom";
 
 import {Provider} from "react-redux";
 import  store  from "./redux/store";
-import { useSelector, useDispatch } from 'react-redux';
-import { login, logout } from './redux/slice';
 
 import App from "./App";
 import Record from "./components/Record";
@@ -15,49 +13,11 @@ import Login from "./components/Login";
 import Register from "./components/Register";
 import About from "./components/About";
 import "./index.css";
-import {useIdleTimer} from 'react-idle-timer';
 
 
 function Main() {
-  const dispatch = useDispatch();
-  const userState = useSelector((state) => state.userState.token);
+
   const [loggedIn, setLoggedIn] = useState(false);
-  const [state, setState] = useState('Active');
-  const [count, setCount] = useState(0);
-  const [remaining, setRemaining] = useState(0);
-
-  const onIdle = () => {
-    setState('Idle');
-    setLoggedIn(false);
-    logout();
-  }
-
-  const onActive = () => {
-    setState('Active');
-  }
-
-  const onAction = () => {
-    setCount(count + 1);
-  }
-
-  const { getRemainingTime } = useIdleTimer({
-    onIdle,
-    onActive,
-    onAction,
-    timeout: 1000 * 60 * 30,
-    // timeout: 10000,
-    throttle: 500
-  });
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setRemaining(Math.ceil(getRemainingTime() / 1000))
-    }, 500);
-
-    return () => {
-      clearInterval(interval)
-    };
-  });
 
   const router = createBrowserRouter([
     {
