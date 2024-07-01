@@ -3,6 +3,19 @@ import jwt from 'jsonwebtoken'
 import dotenv from 'dotenv'
 import db from "../db/connection.js";
 import { ObjectId } from "mongodb";
+import BaseUrl  from '../../client/src/components/BaseUrl.js';
+
+import nodemailer from 'nodemailer';
+const transporter = nodemailer.createTransport({
+    host: 'smtp.gmail.com',
+    service: 'gmail',
+    port: 465,
+    secure: true,
+    auth: {
+        user: process.env.APP_EMAIL,
+        pass: process.env.APP_EMAIL_PASSWORD
+    }
+});
 
 import bcrypt from "bcrypt";
 const saltRounds = 10;
@@ -74,5 +87,40 @@ router.post("/register", async (req, res) => {
         res.status(500).send("Error registering user");
     }
 });
+
+// Password reset route
+router.post("/password-reset", async (req, res) => {
+    try {
+        let collection = db.collection("users");
+        let user = await collection.findOne({ email: req
+        .body.email });
+        if (!user) {
+            return res.status(404).json("User with that email not found");
+        }
+        // TODO - add your email to the .env file
+        let email = 'spiffy.service@gmail.com';
+        let token = jwt.sign({ email: user.email }, process.env.JWT_SECRET, { expiresIn: '1h' });
+        let url = `${BaseUrl}/password-reset/${token}`;
+        let mailOptions = {
+            from: email,
+            to: user.email,
+            subject: 'Password Reset',
+            html: `<h1>Click <a href="${url}">here</a> to reset your password</h1>`
+        };
+        transporter.sendMail(mailOptions, (error, info) => {
+            if (error) {
+                console.log(error);
+                return res.status(500).json(error, "Error sending email");
+            }
+            console.log('Email sent: ' + info.response);
+            res.status(200).json("Email sent");
+        });
+    } 
+    catch (err) {
+        console.error(err);
+        res.status(500).send("Error resetting password");
+    }
+});
+
 
 export default router;
