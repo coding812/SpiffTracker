@@ -34,9 +34,6 @@ const Register = () => {
         });
     }
 
-
-    // TODO: Figure out how to display error messages from the server, toasts not showing in production
-
     // This function will handle the submission.
     async function onSubmit(e) {
         e.preventDefault();
