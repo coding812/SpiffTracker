@@ -152,7 +152,7 @@ export default function Record() {
           onSubmit={onSubmit}
           className="flex flex-col  border rounded-lg overflow-hidden p-2 w-full sm:w-3/4 md:w-1/2 lg:w-1/4 items-center justify-center  bg-white bg-opacity-25 backdrop-blur-lg drop-shadow-lg "
         >
-          <div className="flex w-full grid-cols-1 gap-x-8 gap-y-10 border-b border-slate-900/10 pb-12  justify-center items-center ">
+          <div className="flex w-full grid-cols-1 gap-x-8 gap-y-10 pb-2  justify-center items-center ">
             <div className="flex-col w-full grid-cols-1 gap-x-4 gap-y-6  ">
               {/* EMPLOYEE NAME */}
               <motion.div variants={item}>
@@ -395,7 +395,7 @@ export default function Record() {
           <input
             type="submit"
             value="Save Sale Information"
-            className="inline-flex items-center justify-center whitespace-nowrap text-md font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50  bg-indigo-600 hover:bg-indigo-500 text-white hover:text-accent-foreground h-9 rounded-md px-3 cursor-pointer mt-4"
+            className="inline-flex items-center justify-center whitespace-nowrap text-md font-medium  transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50  bg-indigo-600 hover:bg-indigo-500 text-white hover:text-accent-foreground h-9 rounded-md px-3 cursor-pointer mt-4"
           />
           </motion.div>
         </form>
