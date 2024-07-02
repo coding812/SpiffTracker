@@ -150,7 +150,7 @@ export default function Record() {
         <h1 className="h-16 bg-muted text-black text-2xl font-semibold">Enter your sale information</h1>
         <form
           onSubmit={onSubmit}
-          className="flex flex-col  border rounded-lg overflow-hidden p-2 w-full sm:w-3/4 md:w-1/2 lg:w-1/4 items-center justify-center "
+          className="flex flex-col  border rounded-lg overflow-hidden p-2 w-full sm:w-3/4 md:w-1/2 lg:w-1/4 items-center justify-center  bg-white bg-opacity-25 backdrop-blur-lg drop-shadow-lg "
         >
           <div className="flex w-full grid-cols-1 gap-x-8 gap-y-10 border-b border-slate-900/10 pb-12  justify-center items-center ">
             <div className="flex-col w-full grid-cols-1 gap-x-4 gap-y-6  ">

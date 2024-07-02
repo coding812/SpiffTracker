@@ -20,7 +20,7 @@ export default function About() {
                     Besides I thought it would be fun?
                     Because a simple but modern solution to this problem I personally have experienced in my 15+ years as an HVAC technician needed to be made. There are other solutions to this problem, that all have their drawbacks:
                 </p>
-                <ul className="list-disc px-12 mx-2 border rounded-lg">
+                <ul className="list-disc px-12 mx-2 border rounded-lg  bg-white bg-opacity-25 backdrop-blur-lg drop-shadow-lg">
                     <li>Paper commission sheets get lost, ruined, or misplaced, and have no backup once made.</li>
                     <li>Sales tracking software can be expensive or difficult to use. Not to mention adding more cognitive load and work just to track a sale. (Not every user is a salesman, which would justify these things)</li>
                     <li>The sales tracking components of popular dispatch software is sometimes difficult for managers to rely on, as the "sale" of a repair, which may not be commissioned, is tracked alongside and equal to a "sale" of an "upsell", which would be.</li>

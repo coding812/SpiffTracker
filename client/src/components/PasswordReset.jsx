@@ -3,6 +3,7 @@ import { useParams, useNavigate} from 'react-router-dom';
 
 import {toast} from 'react-toastify';
 import {BaseUrl} from './BaseUrl';
+import { motion } from 'framer-motion';
 
 const PasswordReset = () => {
     const [password, setPassword] = useState('');
@@ -46,14 +47,26 @@ const PasswordReset = () => {
     };
 
     return (
-        <div className="flex justify-center items-center h-screen">
-            <form className="w-full max-w-sm" onSubmit={handleSubmit}>
-                <div className="mb-4">
+        <motion.div 
+        initial={{ opacity: 0, x: -100 }}
+        animate={{ opacity: 1, x: 0 }}
+        exit={{ opacity: 0, x: 100 }}
+        transition={{ duration: 0.45 }}
+        className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+        <div className="sm:mx-auto sm:w-full sm:max-w-sm">
+          <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+            Enter your new password
+          </h2>
+        </div>
+
+        <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm w-1/4 h-2/5 p-6 bg-white bg-opacity-25 backdrop-blur-lg rounded-lg drop-shadow-lg">
+            <form className=" " onSubmit={handleSubmit}>
+                <div className="mb-4 ">
                     <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
                         New Password
                     </label>
                     <input
-                        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        className="block w-full rounded-md border-0 py-1.5 pl-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         id="password"
                         type="password"
                         placeholder="Enter your new password"
@@ -66,7 +79,7 @@ const PasswordReset = () => {
                         Confirm Password
                     </label>
                     <input
-                        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        className="block w-full rounded-md border-0 py-1.5 pl-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         id="confirmPassword"
                         type="password"
                         placeholder="Confirm your new password"
@@ -84,6 +97,7 @@ const PasswordReset = () => {
                 </div>
             </form>
         </div>
+        </motion.div>
     );
 };
 

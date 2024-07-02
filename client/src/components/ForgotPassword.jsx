@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import {BaseUrl} from './BaseUrl';
 import { toast } from "react-toastify";
+import { motion } from 'framer-motion';
 
 
 const ForgotPassword = () => {
@@ -41,9 +42,19 @@ const ForgotPassword = () => {
 
 
     return (
-        <div className="flex mt-48 justify-center h-screen">
-            <div className="w-96">
-                <h2 className="text-2xl font-bold mb-4">Password Reset</h2>
+        <motion.div 
+        initial={{ opacity: 0, x: -100 }}
+        animate={{ opacity: 1, x: 0 }}
+        exit={{ opacity: 0, x: 100 }}
+        transition={{ duration: 0.45 }}
+
+        className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+        <div className="sm:mx-auto sm:w-full sm:max-w-sm">
+          <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+            Password Reset Email Request
+          </h2>
+        </div>
+            <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm w-1/4 h-2/5 p-6 bg-white bg-opacity-25 backdrop-blur-lg rounded-lg drop-shadow-lg">
                 <form onSubmit={handleSubmit}>
                     <div className="mb-4">
                         <label htmlFor="email" className="block mb-2">
@@ -52,7 +63,7 @@ const ForgotPassword = () => {
                         <input
                             type="email"
                             id="email"
-                            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            className="block w-full rounded-md border-0 py-1.5 pl-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 "
                             value={email}
                             onChange={handleEmailChange}
                             required
@@ -66,7 +77,7 @@ const ForgotPassword = () => {
                     </button>
                 </form>
             </div>
-        </div>
+        </motion.div>
     );
 };
 
