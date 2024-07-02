@@ -1,71 +1,88 @@
 import React, { useState } from 'react';
-import BaseUrl from './BaseUrl';
-import { toast } from "react-toastify";
+import { useParams, useNavigate} from 'react-router-dom';
 
+import {toast} from 'react-toastify';
+import {BaseUrl} from './BaseUrl';
 
 const PasswordReset = () => {
-    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const navigate = useNavigate();
+    let token = useParams();
+    
 
-    const handleEmailChange = (e) => {
-        setEmail(e.target.value);
+    const handlePasswordChange = (e) => {
+        setPassword(e.target.value);
     };
 
-    async function handleSubmit(e) {
+    const handleConfirmPasswordChange = (e) => {
+        setConfirmPassword(e.target.value);
+    };
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        const email = document.getElementById('email').value;
-        try {
-        const response = await fetch(`${BaseUrl}/users/password-reset`, {
+        if (password !== confirmPassword) {
+            toast.error('Passwords do not match');
+            return;
+        }
+        let response = await fetch(`${BaseUrl}/users/password-reset/${token.token}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ email }),
-        })
-            const data = await response.json();
-        
-            if (!response.ok) {
-                if (response.status === 404) {
-
-                    toast.error("User with that email not found");
-                    return;
-                }
-            }
-            console.log(data);
-            alert('Password reset email sent');
+            body: JSON.stringify({ password }),
+        });
+        if (response.status === 204) {
+            
+            toast.success('Password reset successfully');
+            navigate('/login');
         } 
-        catch (error) {
-            console.error('Password reset failed:', error);
-            alert(`${data.message}` || 'Error resetting password');
+        else {
+            console.log(response);
+            toast.error('Password reset failed');
         }
+        setPassword('');
+        setConfirmPassword('');
     };
 
-
     return (
-        <div className="flex mt-48 justify-center h-screen">
-            <div className="w-96">
-                <h2 className="text-2xl font-bold mb-4">Password Reset</h2>
-                <form onSubmit={handleSubmit}>
-                    <div className="mb-4">
-                        <label htmlFor="email" className="block mb-2">
-                            Email
-                        </label>
-                        <input
-                            type="email"
-                            id="email"
-                            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            value={email}
-                            onChange={handleEmailChange}
-                            required
-                        />
-                    </div>
+        <div className="flex justify-center items-center h-screen">
+            <form className="w-full max-w-sm" onSubmit={handleSubmit}>
+                <div className="mb-4">
+                    <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
+                        New Password
+                    </label>
+                    <input
+                        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        id="password"
+                        type="password"
+                        placeholder="Enter your new password"
+                        value={password}
+                        onChange={handlePasswordChange}
+                    />
+                </div>
+                <div className="mb-4">
+                    <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="confirmPassword">
+                        Confirm Password
+                    </label>
+                    <input
+                        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        id="confirmPassword"
+                        type="password"
+                        placeholder="Confirm your new password"
+                        value={confirmPassword}
+                        onChange={handleConfirmPasswordChange}
+                    />
+                </div>
+                <div className="flex items-center justify-between">
                     <button
+                        className=" w-full bg-indigo-600 hover:bg-indigo-500 text-white h-9 rounded-md px-3 "
                         type="submit"
-                        className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600"
                     >
                         Reset Password
                     </button>
-                </form>
-            </div>
+                </div>
+            </form>
         </div>
     );
 };

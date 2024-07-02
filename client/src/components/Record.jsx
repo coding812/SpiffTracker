@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { toast } from 'react-toastify';
 import { useDispatch, useSelector } from 'react-redux';
 import {motion} from 'framer-motion';
-import  BaseUrl  from './BaseUrl';
+import {BaseUrl}  from './BaseUrl';
 
 
 // FRAMER MOTION ANIMATION

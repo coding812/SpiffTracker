@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken'
 import dotenv from 'dotenv'
 import db from "../db/connection.js";
 import { ObjectId } from "mongodb";
-import BaseUrl  from '../../client/src/components/BaseUrl.js';
+import {FrontendUrl} from '../../client/src/components/BaseUrl.js';
 
 import nodemailer from 'nodemailer';
 const transporter = nodemailer.createTransport({
@@ -32,7 +32,7 @@ router.post("/login", async (req, res) => {
         if (!user) {
             return res.status(404).send("Not found")
         }
-
+ 
         let passwordMatch = await bcrypt.compare(req.body.password, user.password);
 
         if (!passwordMatch) {
@@ -88,8 +88,8 @@ router.post("/register", async (req, res) => {
     }
 });
 
-// Password reset route
-router.post("/password-reset", async (req, res) => {
+// Forgot password email request route
+router.post("/forgot-password", async (req, res) => {
     try {
         let collection = db.collection("users");
         let user = await collection.findOne({ email: req
@@ -97,10 +97,11 @@ router.post("/password-reset", async (req, res) => {
         if (!user) {
             return res.status(404).json("User with that email not found");
         }
-        // TODO - add your email to the .env file
-        let email = 'spiffy.service@gmail.com';
-        let token = jwt.sign({ email: user.email }, process.env.JWT_SECRET, { expiresIn: '1h' });
-        let url = `${BaseUrl}/password-reset/${token}`;
+        let email = process.env.APP_EMAIL;
+        let token = jwt.sign({ userId: user._id.toString() }, process.env.JWT_SECRET, { expiresIn: '1h' });
+        // TODO: Change this to the deployed URL, not localhost
+        let url = `${FrontendUrl}/password-reset/${token}`;
+        
         let mailOptions = {
             from: email,
             to: user.email,
@@ -121,6 +122,27 @@ router.post("/password-reset", async (req, res) => {
         res.status(500).send("Error resetting password");
     }
 });
+
+// Password reset route
+router.post("/password-reset/:token", async (req, res) => {
+    try {
+        let token = req.params.token;
+        let decoded = jwt.verify(token, process.env.JWT_SECRET);
+        let collection = db.collection("users");
+        let user = await collection.findOne({ _id: ObjectId(decoded.userId) });
+        if (!user) {
+            return res.status(404).json("User not found");
+        }
+        let newPassword = await bcrypt.hash(req.body.password, saltRounds);
+        let result = await collection.updateOne({ _id: ObjectId(decoded.userId) }, { $set: { password: newPassword } });
+        res.status(204).send(result);
+    } 
+    catch (err) {
+        console.error(err);
+        res.status(500).send("Error resetting password");
+    }
+});
+    
 
 
 export default router;

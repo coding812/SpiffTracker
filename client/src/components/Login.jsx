@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { login, logout } from '../redux/slice';
 import { toast } from 'react-toastify';
 
-import  BaseUrl  from './BaseUrl';
+import {BaseUrl}  from './BaseUrl';
 import {motion} from "framer-motion";
 
 const Login = (props) => {
@@ -95,7 +95,7 @@ const Login = (props) => {
                   Password
                 </label>
                 <div className="text-sm">
-                  <a href="/password-reset" className="font-semibold text-indigo-600 hover:text-indigo-500">
+                  <a href="/forgot-password" className="font-semibold text-indigo-600 hover:text-indigo-500">
                     Forgot password?
                   </a>
                 </div>

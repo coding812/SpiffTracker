@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { motion } from "framer-motion";
-import  BaseUrl  from './BaseUrl';
+import {BaseUrl}  from './BaseUrl';
 
 const Register = () => {
     const [form, setForm] = useState({

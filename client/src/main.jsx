@@ -12,6 +12,7 @@ import AdminPanel from "./components/AdminPanel";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import About from "./components/About";
+import ForgotPassword from "./components/ForgotPassword";
 import PasswordReset from "./components/PasswordReset";
 import "./index.css";
 
@@ -94,11 +95,21 @@ function Main() {
       ],
     },
     {
+      path: "/forgot-password",
+      element: <App />,
+      children: [
+        {
+          path: "/forgot-password",
+          element: <ForgotPassword />,
+        },
+      ],
+    },
+    {
       path: "/password-reset",
       element: <App />,
       children: [
         {
-          path: "/password-reset",
+          path: "/password-reset/:token",
           element: <PasswordReset />,
         },
       ],
