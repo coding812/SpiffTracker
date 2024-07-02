@@ -64,14 +64,14 @@ const Login = (props) => {
         exit={{ opacity: 0, x: 100 }}
         transition={{ duration: 0.45 }}
         
-      className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+      className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8 ">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
             Sign in to your account
           </h2>
         </div>
 
-        <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm w-1/4 h-2/5 p-6 bg-white bg-opacity-25 backdrop-blur-lg rounded-lg drop-shadow-lg">
+        <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm  h-2/5 p-6 bg-white bg-opacity-25 backdrop-blur-lg rounded-lg drop-shadow-lg">
           <form className="space-y-6  " action="#" method="POST" onSubmit={onSubmit}>
             <div>
               <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">

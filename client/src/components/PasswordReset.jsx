@@ -59,7 +59,7 @@ const PasswordReset = () => {
           </h2>
         </div>
 
-        <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm w-1/4 h-2/5 p-6 bg-white bg-opacity-25 backdrop-blur-lg rounded-lg drop-shadow-lg">
+        <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm  h-2/5 p-6 bg-white bg-opacity-25 backdrop-blur-lg rounded-lg drop-shadow-lg">
             <form className=" " onSubmit={handleSubmit}>
                 <div className="mb-4 ">
                     <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
