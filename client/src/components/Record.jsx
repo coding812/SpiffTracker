@@ -2,9 +2,8 @@ import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { toast } from 'react-toastify';
 import { useDispatch, useSelector } from 'react-redux';
-import {motion} from 'framer-motion';
-import {BaseUrl}  from './BaseUrl';
-
+import { motion } from 'framer-motion';
+import { BaseUrl } from './BaseUrl';
 
 // FRAMER MOTION ANIMATION
 const container = {
@@ -24,14 +23,13 @@ const item = {
   visible: { y: 0, opacity: 1 },
 };
 
-
-
 export default function Record() {
   const [loggedIn, setLoggedIn] = useState(false);
   const dispatch = useDispatch();
   const userState = useSelector((state) => state.userState);
-  
-  
+  const companyId = userState.user ? userState.user.companyId : null;
+
+
   useEffect(() => {
     const checkLoginStatus = async () => {
       if (userState) {
@@ -133,275 +131,279 @@ export default function Record() {
       }
     }
   }
-  
+
   return (
     <>
-      <motion.div 
-      initial={{ x: -1000 }}
-      animate={{ x: 0 }}
-      transition={{ type: "spring", stiffness: 100 }}>
-        
+      <motion.div
+        initial={{ x: -1000 }}
+        animate={{ x: 0 }}
+        transition={{ type: "spring", stiffness: 100 }}>
+
       </motion.div>
       <motion.div
         variants={container}
         initial="hidden"
         animate="visible">
 
-      <div className="flex flex-col items-center justify-center">
-        <h1 className="h-16 bg-muted text-black text-2xl font-semibold">Enter your sale information</h1>
-        <form
-          onSubmit={onSubmit}
-          className="flex flex-col  border rounded-lg overflow-hidden p-2 w-full sm:w-3/4 md:w-1/2 lg:w-1/4 items-center justify-center  bg-white bg-opacity-25 backdrop-blur-lg drop-shadow-lg "
-        >
-          <div className="flex w-full grid-cols-1 gap-x-8 gap-y-10 pb-2  justify-center items-center ">
-            <div className="flex-col w-full grid-cols-1 gap-x-4 gap-y-6  ">
-              {/* EMPLOYEE NAME */}
-              <motion.div variants={item}>
-              <div className="">
-                <label
-                  htmlFor="employeeName"
-                  className="block text-sm font-medium leading-6 text-slate-900"
-                >
-                  Employee Name
-                </label>
-                <div className="mt-2">
-                  <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-slate-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md  ">
-                    <input
-                      type="text"
-                      name="employeeName"
-                      id="employeeName"
-                      required
-                      className="block w-full rounded-md border-0 py-1.5 pl-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                      
-                      placeholder="First and Last"
-                      value={form.employeeName}
-                      onChange={(e) => updateForm({ employeeName: e.target.value })}
-                    />
+        <div className="flex flex-col items-center justify-center">
+          {companyId === null ?
+          <h1 className="h-16 bg-muted text-black text-2xl font-semibold">Enter Your Sale Information</h1> :
+            <h1 className="h-16 bg-muted text-black text-2xl font-semibold">Entering Sale for Company Id - {companyId}</h1> 
+            
+          }
+          <form
+            onSubmit={onSubmit}
+            className="flex flex-col  border rounded-lg overflow-hidden p-2 w-full sm:w-3/4 md:w-1/2 lg:w-1/4 items-center justify-center  bg-white bg-opacity-25 backdrop-blur-lg drop-shadow-lg "
+          >
+            <div className="flex w-full grid-cols-1 gap-x-8 gap-y-10 pb-2  justify-center items-center ">
+              <div className="flex-col w-full grid-cols-1 gap-x-4 gap-y-6  ">
+                {/* EMPLOYEE NAME */}
+                <motion.div variants={item}>
+                  <div className="">
+                    <label
+                      htmlFor="employeeName"
+                      className="block text-sm font-medium leading-6 text-slate-900"
+                    >
+                      Employee Name
+                    </label>
+                    <div className="mt-2">
+                      <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-slate-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md  ">
+                        <input
+                          type="text"
+                          name="employeeName"
+                          id="employeeName"
+                          required
+                          className="block w-full rounded-md border-0 py-1.5 pl-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+
+                          placeholder="First and Last"
+                          value={form.employeeName}
+                          onChange={(e) => updateForm({ employeeName: e.target.value })}
+                        />
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
-              </motion.div>
-              {/* COMPANY ID NUMBER */}
-              <motion.div variants={item}>
-              <div className="sm:col-span-4">
-                <label
-                  htmlFor="companyId"
-                  className="block text-sm font-medium leading-6 text-slate-900"
-                >
-                  Company ID Number
-                </label>
-                <div className="mt-2">
-                  <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-slate-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-400 sm:max-w-md">
-                    <input
-                      readOnly={loggedIn}
-                      type="number"
-                      name="companyId"
-                      id="companyId"
-                      required
-                      className="block w-full rounded-md border-0 py-1.5 pl-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                      placeholder="Company ID Number"
-                      value={userState.user !== null ? userState.user.companyId : form.companyId}
-                      onChange={(e) => updateForm({ companyId: e.target.value })}
-                    />
+                </motion.div>
+                {/* COMPANY ID NUMBER */}
+                <motion.div variants={item}>
+                  <div className="sm:col-span-4">
+                    <label
+                      htmlFor="companyId"
+                      className="block text-sm font-medium leading-6 text-slate-900"
+                    >
+                      Company ID Number
+                    </label>
+                    <div className="mt-2">
+                      <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-slate-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-400 sm:max-w-md">
+                        <input
+                          readOnly={loggedIn}
+                          type="number"
+                          name="companyId"
+                          id="companyId"
+                          required
+                          className="block w-full rounded-md border-0 py-1.5 pl-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                          placeholder="Company ID Number"
+                          value={userState.user !== null ? userState.user.companyId : form.companyId}
+                          onChange={(e) => updateForm({ companyId: e.target.value })}
+                        />
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
-              </motion.div>
-              {/* DATE OF SALE */}
-              <motion.div variants={item}>
-              <div className="sm:col-span-4">
-                <label
-                  htmlFor="dateOfSale"
-                  className="block text-sm font-medium leading-6 text-slate-900"
-                >
-                  Date of Sale
-                </label>
-                <div className="mt-2">
-                  <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-slate-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-400 sm:max-w-md">
-                    <input
-                      type="date"
-                      name="dateOfSale"
-                      id="dateOfSale"
-                      required
-                      className="block w-full rounded-md border-0 py-1.5 pl-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                      value={form.dateOfSale}
-                      onChange={(e) => updateForm({ dateOfSale: e.target.value })}
-                    />
+                </motion.div>
+                {/* DATE OF SALE */}
+                <motion.div variants={item}>
+                  <div className="sm:col-span-4">
+                    <label
+                      htmlFor="dateOfSale"
+                      className="block text-sm font-medium leading-6 text-slate-900"
+                    >
+                      Date of Sale
+                    </label>
+                    <div className="mt-2">
+                      <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-slate-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-400 sm:max-w-md">
+                        <input
+                          type="date"
+                          name="dateOfSale"
+                          id="dateOfSale"
+                          required
+                          className="block w-full rounded-md border-0 py-1.5 pl-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                          value={form.dateOfSale}
+                          onChange={(e) => updateForm({ dateOfSale: e.target.value })}
+                        />
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
-              </motion.div>
-              {/* JOB COMPLETED */}
-              <motion.div variants={item}>
-              <div className="sm:col-span-4">
-                <label
-                  htmlFor="jobCompleted"
-                  className="block text-sm font-medium leading-6 text-slate-900"
-                >
-                  Job Completed
-                </label>
-                <div className="mt-2">
-                  <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-slate-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-400 sm:max-w-md">
-                    <input
-                      type="date"
-                      name="jobCompleted"
-                      id="jobCompleted"
-                      required
-                      className="block w-full rounded-md border-0 py-1.5 pl-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                      value={form.jobCompleted}
-                      onChange={(e) => updateForm({ jobCompleted: e.target.value })}
-                    />
+                </motion.div>
+                {/* JOB COMPLETED */}
+                <motion.div variants={item}>
+                  <div className="sm:col-span-4">
+                    <label
+                      htmlFor="jobCompleted"
+                      className="block text-sm font-medium leading-6 text-slate-900"
+                    >
+                      Job Completed
+                    </label>
+                    <div className="mt-2">
+                      <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-slate-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-400 sm:max-w-md">
+                        <input
+                          type="date"
+                          name="jobCompleted"
+                          id="jobCompleted"
+                          required
+                          className="block w-full rounded-md border-0 py-1.5 pl-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                          value={form.jobCompleted}
+                          onChange={(e) => updateForm({ jobCompleted: e.target.value })}
+                        />
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
-              </motion.div>
-              {/* CUSTOMER NAME */}
-              <motion.div variants={item}>
-              <div className="sm:col-span-4">
-                <label
-                  htmlFor="customerName"
-                  className="block text-sm font-medium leading-6 text-slate-900"
-                >
-                  Customer Name
-                </label>
-                <div className="mt-2">
-                  <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-slate-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-400 sm:max-w-md">
-                    <input
-                      type="text"
-                      name="customerName"
-                      id="customerName"
-                      required
-                      className="block w-full rounded-md border-0 py-1.5 pl-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                      placeholder="First and Last"
-                      value={form.customerName}
-                      onChange={(e) => updateForm({ customerName: e.target.value })}
-                    />
+                </motion.div>
+                {/* CUSTOMER NAME */}
+                <motion.div variants={item}>
+                  <div className="sm:col-span-4">
+                    <label
+                      htmlFor="customerName"
+                      className="block text-sm font-medium leading-6 text-slate-900"
+                    >
+                      Customer Name
+                    </label>
+                    <div className="mt-2">
+                      <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-slate-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-400 sm:max-w-md">
+                        <input
+                          type="text"
+                          name="customerName"
+                          id="customerName"
+                          required
+                          className="block w-full rounded-md border-0 py-1.5 pl-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                          placeholder="First and Last"
+                          value={form.customerName}
+                          onChange={(e) => updateForm({ customerName: e.target.value })}
+                        />
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
-              </motion.div>
-              {/* WORK ORDER / INVOICE # */}
-              <motion.div variants={item}>
-              <div className="sm:col-span-4">
-                <label
-                  htmlFor="workOrder"
-                  className="block text-sm font-medium leading-6 text-slate-900"
-                >
-                  Work Order / Invoice #
-                </label>
-                <div className="mt-2">
-                  <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-slate-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-400 sm:max-w-md">
-                    <input
-                      type="text"
-                      name="workOrder"
-                      id="workOrder"
-                      required
-                      className="block w-full rounded-md border-0 py-1.5 pl-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                      placeholder="Work Order or Invoice #"
-                      value={form.workOrder}
-                      onChange={(e) => updateForm({ workOrder: e.target.value })}
-                    />
+                </motion.div>
+                {/* WORK ORDER / INVOICE # */}
+                <motion.div variants={item}>
+                  <div className="sm:col-span-4">
+                    <label
+                      htmlFor="workOrder"
+                      className="block text-sm font-medium leading-6 text-slate-900"
+                    >
+                      Work Order / Invoice #
+                    </label>
+                    <div className="mt-2">
+                      <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-slate-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-400 sm:max-w-md">
+                        <input
+                          type="text"
+                          name="workOrder"
+                          id="workOrder"
+                          required
+                          className="block w-full rounded-md border-0 py-1.5 pl-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                          placeholder="Work Order or Invoice #"
+                          value={form.workOrder}
+                          onChange={(e) => updateForm({ workOrder: e.target.value })}
+                        />
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
-              </motion.div>
-              {/* SALE DESCRIPION */}
-              <motion.div variants={item}>
-              <div className="sm:col-span-4">
-                <label
-                  htmlFor="saleDescription"
-                  className="block text-sm font-medium leading-6 text-slate-900"
-                >
-                  Sale Description
-                </label>
-                <div className="mt-2">
-                  <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-slate-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-400 sm:max-w-md">
-                    <input
-                      type="text"
-                      name="saleDescription"
-                      id="saleDescription"
-                      required
-                      className="block w-full rounded-md border-0 py-1.5 pl-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                      placeholder=" Brief Sale Description"
-                      value={form.saleDescription}
-                      onChange={(e) => updateForm({ saleDescription: e.target.value })}
-                    />
+                </motion.div>
+                {/* SALE DESCRIPION */}
+                <motion.div variants={item}>
+                  <div className="sm:col-span-4">
+                    <label
+                      htmlFor="saleDescription"
+                      className="block text-sm font-medium leading-6 text-slate-900"
+                    >
+                      Sale Description
+                    </label>
+                    <div className="mt-2">
+                      <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-slate-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-400 sm:max-w-md">
+                        <input
+                          type="text"
+                          name="saleDescription"
+                          id="saleDescription"
+                          required
+                          className="block w-full rounded-md border-0 py-1.5 pl-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                          placeholder=" Brief Sale Description"
+                          value={form.saleDescription}
+                          onChange={(e) => updateForm({ saleDescription: e.target.value })}
+                        />
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
-              </motion.div>
-              {/* SALE AMOUNT */}
-              <motion.div variants={item}>
-              <div className="sm:col-span-4">
-                <label
-                  htmlFor="saleAmount"
-                  className="block text-sm font-medium leading-6 text-slate-900"
-                >
-                  Sale Amount
-                </label>
-                <div className="mt-2">
-                  <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-slate-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-400 sm:max-w-md">
-                    <input
-                      type="text"
-                      name="saleAmount"
-                      id="saleAmount"
-                      required
-                      className="block w-full rounded-md border-0 py-1.5 pl-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                      placeholder="Sale Amount"
-                      value={form.saleAmount}
-                      onChange={(e) => {
-                        const value = e.target.value;
-                        if (!isNaN(value)) {
-                          updateForm({ saleAmount: value });
-                        }
-                      }}
-                    />
+                </motion.div>
+                {/* SALE AMOUNT */}
+                <motion.div variants={item}>
+                  <div className="sm:col-span-4">
+                    <label
+                      htmlFor="saleAmount"
+                      className="block text-sm font-medium leading-6 text-slate-900"
+                    >
+                      Sale Amount
+                    </label>
+                    <div className="mt-2">
+                      <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-slate-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-400 sm:max-w-md">
+                        <input
+                          type="text"
+                          name="saleAmount"
+                          id="saleAmount"
+                          required
+                          className="block w-full rounded-md border-0 py-1.5 pl-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                          placeholder="Sale Amount"
+                          value={form.saleAmount}
+                          onChange={(e) => {
+                            const value = e.target.value;
+                            if (!isNaN(value)) {
+                              updateForm({ saleAmount: value });
+                            }
+                          }}
+                        />
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
-              </motion.div>
-              {/* EXPECTED COMMISSION */}
-              <motion.div variants={item}>
-              <div className="sm:col-span-4">
-                <label
-                  htmlFor="expectedCommission"
-                  className="block text-sm font-medium leading-6 text-slate-900"
-                >
-                  Expected Commission
-                </label>
-                <div className="mt-2">
-                  <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-slate-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-400 sm:max-w-md">
-                    <input
-                      type="text"
-                      name="expectedCommission"
-                      id="expectedCommission"
-                      required
-                      className="block w-full rounded-md border-0 py-1.5 pl-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                      placeholder="Expected Commission"
-                      value={form.expectedCommission}
-                      onChange={(e) => {
-                        const value = e.target.value;
-                        if (!isNaN(value)) {
-                          updateForm({ expectedCommission: value });
-                        }
-                      }}
-                    />
+                </motion.div>
+                {/* EXPECTED COMMISSION */}
+                <motion.div variants={item}>
+                  <div className="sm:col-span-4">
+                    <label
+                      htmlFor="expectedCommission"
+                      className="block text-sm font-medium leading-6 text-slate-900"
+                    >
+                      Expected Commission
+                    </label>
+                    <div className="mt-2">
+                      <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-slate-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-400 sm:max-w-md">
+                        <input
+                          type="text"
+                          name="expectedCommission"
+                          id="expectedCommission"
+                          required
+                          className="block w-full rounded-md border-0 py-1.5 pl-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                          placeholder="Expected Commission"
+                          value={form.expectedCommission}
+                          onChange={(e) => {
+                            const value = e.target.value;
+                            if (!isNaN(value)) {
+                              updateForm({ expectedCommission: value });
+                            }
+                          }}
+                        />
+                      </div>
+                    </div>
                   </div>
-                </div>
+                </motion.div>
               </div>
-              </motion.div>
             </div>
-          </div>
-          {/* SUBMIT BUTTON */}
-          <motion.div variants={item}>
-          <input
-            type="submit"
-            value="Save Sale Information"
-            className="inline-flex items-center justify-center whitespace-nowrap text-md font-medium  transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50  bg-indigo-600 hover:bg-indigo-500 text-white hover:text-accent-foreground h-9 rounded-md px-3 cursor-pointer mt-4"
-          />
-          </motion.div>
-        </form>
-      </div>
+            {/* SUBMIT BUTTON */}
+            <motion.div variants={item}>
+              <input
+                type="submit"
+                value="Save Sale Information"
+                className="inline-flex items-center justify-center whitespace-nowrap text-md font-medium  transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50  bg-indigo-600 hover:bg-indigo-500 text-white hover:text-accent-foreground h-9 rounded-md px-3 cursor-pointer mt-4"
+              />
+            </motion.div>
+          </form>
+        </div>
       </motion.div>
     </>
   );
