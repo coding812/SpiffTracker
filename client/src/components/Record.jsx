@@ -153,7 +153,7 @@ export default function Record() {
           }
           <form
             onSubmit={onSubmit}
-            className="flex flex-col  border rounded-lg overflow-hidden p-2 w-full sm:w-3/4 md:w-1/2 lg:w-1/4 items-center justify-center  bg-white bg-opacity-25 backdrop-blur-lg drop-shadow-lg "
+            className="flex flex-col p-6 border rounded-lg overflow-hidden  w-full sm:w-3/4 md:w-1/2 lg:w-1/4 items-center justify-center  bg-white bg-opacity-25 backdrop-blur-lg drop-shadow-lg "
           >
             <div className="flex w-full grid-cols-1 gap-x-8 gap-y-10 pb-2  justify-center items-center ">
               <div className="flex-col w-full grid-cols-1 gap-x-4 gap-y-6  ">
