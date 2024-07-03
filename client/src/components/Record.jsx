@@ -29,8 +29,9 @@ const item = {
 export default function Record() {
   const [loggedIn, setLoggedIn] = useState(false);
   const dispatch = useDispatch();
-  const userState = useSelector((state) => state.userState.token);
-
+  const userState = useSelector((state) => state.userState);
+  
+  
   useEffect(() => {
     const checkLoginStatus = async () => {
       if (userState) {
@@ -192,13 +193,14 @@ export default function Record() {
                 <div className="mt-2">
                   <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-slate-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-400 sm:max-w-md">
                     <input
+                      readOnly={loggedIn}
                       type="number"
                       name="companyId"
                       id="companyId"
                       required
                       className="block w-full rounded-md border-0 py-1.5 pl-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       placeholder="Company ID Number"
-                      value={form.companyId}
+                      value={userState.user !== null ? userState.user.companyId : form.companyId}
                       onChange={(e) => updateForm({ companyId: e.target.value })}
                     />
                   </div>
