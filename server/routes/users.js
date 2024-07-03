@@ -97,10 +97,10 @@ router.post("/forgot-password", async (req, res) => {
         if (!user) {
             return res.status(404).json("User with that email not found");
         }
+
         let email = process.env.APP_EMAIL;
         let token = jwt.sign({ userId: user._id.toString() }, process.env.JWT_SECRET, { expiresIn: '1h' });
-        // TODO: Change this to the deployed URL, not localhost
-        let url = `${FrontendUrl}/password-reset/${token}`;
+        let url = `${FrontendUrl}password-reset/${token}`;
         
         let mailOptions = {
             from: email,
