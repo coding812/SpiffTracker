@@ -24,24 +24,16 @@ const item = {
 };
 
 export default function Record() {
-  const [loggedIn, setLoggedIn] = useState(false);
   const dispatch = useDispatch();
   const userState = useSelector((state) => state.userState);
   const companyId = userState.user ? userState.user.companyId : null;
-
-
-  useEffect(() => {
-    const checkLoginStatus = async () => {
-      if (userState) {
-        setLoggedIn(true);
-      }
-    };
-    checkLoginStatus();
-  }, []);
+  const [isNew, setIsNew] = useState(true);
+  const params = useParams();
+  const navigate = useNavigate();
 
   const [form, setForm] = useState({
     employeeName: "",
-    companyId: "",
+    companyId: userState.user !== null ? companyId : "",
     dateOfSale: new Date().toISOString().split("T")[0],
     jobCompleted: new Date().toISOString().split("T")[0],
     customerName: "",
@@ -50,9 +42,8 @@ export default function Record() {
     saleAmount: "",
     expectedCommission: "",
   });
-  const [isNew, setIsNew] = useState(true);
-  const params = useParams();
-  const navigate = useNavigate();
+
+  
 
   useEffect(() => {
     async function fetchData() {
@@ -123,7 +114,7 @@ export default function Record() {
         saleAmount: "",
         expectedCommission: ""
       });
-      if (loggedIn) {
+      if (userState.user !== null) {
         navigate("/admin");
       }
       else {
@@ -195,7 +186,7 @@ export default function Record() {
                     <div className="mt-2">
                       <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-slate-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-400 sm:max-w-md">
                         <input
-                          readOnly={loggedIn}
+                          readOnly={userState.user !== null ? true : false}
                           type="number"
                           name="companyId"
                           id="companyId"
