@@ -34,6 +34,9 @@ jobs:
             echo "ATLAS_URI is set: ${#ATLAS_URI}"
             echo "JWT_SECRET is set: ${#JWT_SECRET}"
         
+      - name: Debug Environment Variables
+        run: env | grep "ATLAS_URI\|JWT_SECRET"
+          
 
       - name: Print current working directory
         run: pwd  # Debug step to check the current directory
