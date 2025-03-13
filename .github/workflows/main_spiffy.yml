@@ -33,7 +33,7 @@ jobs:
             echo "NODE_ENV=production" >> .env
 
       - name: Upload .env file as an artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3  # Updated to v3
         with:
           name: env-file
           path: .env      
@@ -55,12 +55,11 @@ jobs:
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
 
     steps:
-      - name: Upload .env file as an artifact
-        uses: actions/upload-artifact@v2
+      - name: Download .env file from build job
+        uses: actions/download-artifact@v3
         with:
           name: env-file
-          path: .env
-          
+
       - name: Download artifact from build job
         uses: actions/download-artifact@v3
         with:
