@@ -1,6 +1,3 @@
-# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
-# More GitHub Actions for Azure: https://github.com/Azure/actions
-
 name: Build and deploy Node.js app to Azure Web App - spiffy
 
 on:
@@ -25,12 +22,15 @@ jobs:
         run: |
           npm install
           npm run build --if-present
-          
+
       - name: Create .env file
         run: |
-            echo "ATLAS_URI=${{secrets.ATLAS_URI}}" > .env    
-            echo "JWT_SECRET=${{secrets.JWT_SECRET}}" >> .env
-            echo "NODE_ENV=production" >> .env
+          echo "ATLAS_URI=${{secrets.ATLAS_URI}}" > .env    
+          echo "JWT_SECRET=${{secrets.JWT_SECRET}}" >> .env
+          echo "NODE_ENV=production" >> .env
+
+      - name: Print current working directory
+        run: pwd  # Debug step to check the current directory
 
       - name: List files before uploading
         run: ls -la  # Debug step to check if .env exists
@@ -42,7 +42,7 @@ jobs:
         uses: actions/upload-artifact@v4  # Ensure this is the correct version
         with:
           name: env-file
-          path: ./env      
+          path: .env      
 
       - name: Compress artifact for deployment
         run: tar -czvf release.tar.gz ./*
