@@ -42,7 +42,7 @@ jobs:
         uses: actions/upload-artifact@v4  # Ensure this is the correct version
         with:
           name: env-file
-          path: .env      
+          path: ./env      
 
       - name: Compress artifact for deployment
         run: tar -czvf release.tar.gz ./*
