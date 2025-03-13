@@ -35,6 +35,9 @@ jobs:
       - name: List files before uploading
         run: ls -la  # Debug step to check if .env exists
 
+      - name: Print .env file contents
+        run: cat .env  # Debug step to check the contents of .env
+
       - name: Upload .env file as an artifact
         uses: actions/upload-artifact@v4  # Ensure this is the correct version
         with:
