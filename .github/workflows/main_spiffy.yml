@@ -32,8 +32,11 @@ jobs:
             echo "JWT_SECRET=${{secrets.JWT_SECRET}}" >> .env
             echo "NODE_ENV=production" >> .env
 
+      - name: List files before uploading
+        run: ls -la  # Debug step to check if .env exists
+
       - name: Upload .env file as an artifact
-        uses: actions/upload-artifact@v4  # Updated to v3
+        uses: actions/upload-artifact@v4  # Ensure this is the correct version
         with:
           name: env-file
           path: .env      
