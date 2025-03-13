@@ -28,6 +28,12 @@ jobs:
           echo "ATLAS_URI=${{secrets.ATLAS_URI}}" > .env    
           echo "JWT_SECRET=${{secrets.JWT_SECRET}}" >> .env
           echo "NODE_ENV=production" >> .env
+          
+      - name: Debug Secrets Injection
+        run: |
+            echo "ATLAS_URI is set: ${#ATLAS_URI}"
+            echo "JWT_SECRET is set: ${#JWT_SECRET}"
+        
 
       - name: Print current working directory
         run: pwd  # Debug step to check the current directory
