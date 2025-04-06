@@ -185,7 +185,7 @@ export default function Record() {
                     <div className="mt-2">
                       <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-slate-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-400 sm:max-w-md">
                         <input
-                          readOnly={!!userState.user}
+                          // readOnly={!!userState.user}
                           type="number"
                           name="companyId"
                           id="companyId"
