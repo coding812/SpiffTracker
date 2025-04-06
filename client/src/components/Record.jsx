@@ -31,11 +31,12 @@ export default function Record() {
   // Check if user is logged in
   useEffect(() => {
     const checkLoginStatus = async () => {
-      console.log(userState.user);
-      if (userState.user ) {
+      console.error("Entire userState:", userState); // Log the entire state
+      if (userState.user) {
+        console.error("userState.user exists:", userState.user);
         setLoggedIn(true);
-      }
-      else {
+      } else {
+        console.error("userState.user is null or undefined");
         setLoggedIn(false);
       }
     };
