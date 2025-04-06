@@ -25,15 +25,18 @@ const item = {
 
 export default function Record() {
   const [loggedIn, setLoggedIn] = useState(false);
-  const dispatch = useDispatch();
   const userState = useSelector((state) => state.userState);
   const companyId = userState.user ? userState.user.companyId : null;
 
   // Check if user is logged in
   useEffect(() => {
     const checkLoginStatus = async () => {
-      if (userState.user) {
+      console.log(userState.user);
+      if (userState.user ) {
         setLoggedIn(true);
+      }
+      else {
+        setLoggedIn(false);
       }
     };
     checkLoginStatus();

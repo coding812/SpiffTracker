@@ -1,9 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const isValidUser = (user) => {
-    return user && Object.keys(user).length > 0;
-};
-
 export const userStateSlice = createSlice({
     name: "userState",
     initialState: {
@@ -14,7 +10,7 @@ export const userStateSlice = createSlice({
     reducers: {
         login: (state, action) => {
             state.token = action.payload.token;
-            state.user = isValidUser(action.payload.user) ? action.payload.user : null;
+            state.user = action.payload.user;
             state.jwtExpiration = action.payload.jwtExpiration;
         },
         logout: (state) => {
