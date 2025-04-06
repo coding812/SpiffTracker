@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { toast } from 'react-toastify';
-import { useDispatch, useSelector } from 'react-redux';
+import {  useSelector } from 'react-redux';
 import { motion } from 'framer-motion';
 import { BaseUrl } from './BaseUrl';
 
@@ -24,24 +24,8 @@ const item = {
 };
 
 export default function Record() {
-  const [loggedIn, setLoggedIn] = useState(false);
   const userState = useSelector((state) => state.userState);
   const companyId = userState.user ? userState.user.companyId : null;
-
-  // Check if user is logged in
-  useEffect(() => {
-    const checkLoginStatus = async () => {
-      console.error("Entire userState:", userState); // Log the entire state
-      if (userState.user) {
-        console.error("userState.user exists:", userState.user);
-        setLoggedIn(true);
-      } else {
-        console.error("userState.user is null or undefined");
-        setLoggedIn(false);
-      }
-    };
-    checkLoginStatus();
-  }, [userState]);
 
   // State to hold the form data
   const [form, setForm] = useState({
@@ -201,7 +185,7 @@ export default function Record() {
                     <div className="mt-2">
                       <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-slate-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-400 sm:max-w-md">
                         <input
-                          readOnly={loggedIn}
+                          readOnly={!!userState.user}
                           type="number"
                           name="companyId"
                           id="companyId"
