@@ -27,7 +27,6 @@ export default function Record() {
   const userState = useSelector((state) => state.userState);
   const companyId = userState.user ? userState.user.companyId : null;
   const [loggedIn, setLoggedIn] = useState(false);
-  console.log(loggedIn)
 
   useEffect(() => {
     if (userState.user) {
