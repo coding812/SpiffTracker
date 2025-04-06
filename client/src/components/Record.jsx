@@ -29,16 +29,17 @@ export default function Record() {
   const userState = useSelector((state) => state.userState);
   const companyId = userState.user ? userState.user.companyId : null;
 
-
+  // Check if user is logged in
   useEffect(() => {
     const checkLoginStatus = async () => {
-      if (userState) {
+      if (userState.user) {
         setLoggedIn(true);
       }
     };
     checkLoginStatus();
-  }, []);
+  }, [userState]);
 
+  // State to hold the form data
   const [form, setForm] = useState({
     employeeName: "",
     companyId: "",
@@ -54,6 +55,7 @@ export default function Record() {
   const params = useParams();
   const navigate = useNavigate();
 
+  // Check if we are adding a new record or editing an existing one
   useEffect(() => {
     async function fetchData() {
       const id = params.id?.toString() || undefined;
