@@ -28,6 +28,8 @@ router.post("/", async (req, res) => {
     saleDescription: req.body.saleDescription,
     saleAmount: req.body.saleAmount,
     expectedCommission: req.body.expectedCommission,
+    regularHours: req.body.regularHours,
+    bidTime: req.body.bidTime
   };
 
   let existingCompany = await db.collection("users").findOne({ companyId: req.body.companyId });
@@ -66,6 +68,8 @@ router.patch("/:id", authenticateToken, async (req, res) => {
         saleDescription: req.body.saleDescription,
         saleAmount: req.body.saleAmount,
         expectedCommission: req.body.expectedCommission,
+        regularHours: req.body.regularHours,
+        bidTime: req.body.bidTime
       },
     };
 

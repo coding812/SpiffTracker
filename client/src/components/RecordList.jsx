@@ -82,6 +82,21 @@ const Record = ({ record, updateRecord, deleteRecord }) => {
           <input
             className="bg-background border border-muted/50 rounded-md px-2 h-9"
             type="text"
+            name="jobCompleted"
+            value={editedRecord.jobCompleted}
+            onChange={handleInputChange}
+          />
+        ) : (
+          record.jobCompleted
+        )}
+      </motion.td>
+      <motion.td 
+      variants={item}
+      className="px-4 py-4 align-middle text-sm font-medium text-muted-foreground">
+        {isEditing ? (
+          <input
+            className="bg-background border border-muted/50 rounded-md px-2 h-9"
+            type="text"
             name="employeeName"
             value={editedRecord.employeeName}
             onChange={handleInputChange}
@@ -148,6 +163,36 @@ const Record = ({ record, updateRecord, deleteRecord }) => {
           />
         ) : (
           record.expectedCommission
+        )}
+      </motion.td>
+      <motion.td 
+      variants={item}
+      className="px-4 py-4 align-middle text-sm font-medium text-muted-foreground">
+        {isEditing ? (
+          <input
+            className="bg-background border border-muted/50 rounded-md px-3 h-9"
+            type="text"
+            name="regularHours"
+            value={editedRecord.regularHours}
+            onChange={handleInputChange}
+          />
+        ) : (
+          record.regularHours
+        )}
+      </motion.td>
+      <motion.td 
+      variants={item}
+      className="px-4 py-4 align-middle text-sm font-medium text-muted-foreground">
+        {isEditing ? (
+          <input
+            className="bg-background border border-muted/50 rounded-md px-3 h-9"
+            type="text"
+            name="bidTime"
+            value={editedRecord.bidTime}
+            onChange={handleInputChange}
+          />
+        ) : (
+          record.bidTime
         )}
       </motion.td>
       <motion.td 

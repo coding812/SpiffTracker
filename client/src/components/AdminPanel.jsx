@@ -153,6 +153,9 @@ const AdminPanel = () => {
             <thead>
               <tr className="border-b hover:bg-muted/50 data-[state=selected]:bg-muted">
                 <th className="h-14 px-4 text-left font-medium text-muted-foreground">
+                  Date of Sale
+                </th>
+                <th className="h-14 px-4 text-left font-medium text-muted-foreground">
                   Employee Name
                 </th>
                 <th className="h-14 px-4 text-left font-medium text-muted-foreground">
@@ -166,6 +169,12 @@ const AdminPanel = () => {
                 </th>
                 <th className="h-14 px-4 text-left font-medium text-muted-foreground">
                   Commission
+                </th>
+                <th className="h-14 px-4 text-left font-medium text-muted-foreground">
+                  Regular Hours
+                </th>
+                <th className="h-14 px-4 text-left font-medium text-muted-foreground">
+                  Bid Hours
                 </th>
               </tr>
             </thead>

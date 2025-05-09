@@ -51,6 +51,8 @@ export default function Record() {
     saleDescription: "",
     saleAmount: "",
     expectedCommission: "",
+    regularHours: "",
+    bidTime: ""
   });
   const [isNew, setIsNew] = useState(true);
   const params = useParams();
@@ -124,7 +126,9 @@ export default function Record() {
         workOrder: "",
         saleDescription: "",
         saleAmount: "",
-        expectedCommission: ""
+        expectedCommission: "",
+        regularHours: "",
+        bidTime: ""
       });
       if (loggedIn) {
         navigate("/admin");
@@ -156,7 +160,7 @@ export default function Record() {
           }
           <form
             onSubmit={onSubmit}
-            className="flex flex-col p-6 border rounded-lg overflow-hidden  w-full sm:w-3/4 md:w-1/2 lg:w-1/4 items-center justify-center  bg-white bg-opacity-25 backdrop-blur-lg drop-shadow-lg "
+            className="flex flex-col p-8 border rounded-lg overflow-hidden  w-full sm:w-3/4 md:w-1/2 lg:w-1/4 items-center justify-center  bg-white bg-opacity-25 backdrop-blur-lg drop-shadow-lg "
           >
             <div className="flex w-full grid-cols-1 gap-x-8 gap-y-10 pb-2  justify-center items-center ">
               <div className="flex-col w-full grid-cols-1 gap-x-4 gap-y-6  ">
@@ -388,6 +392,66 @@ export default function Record() {
                             const value = e.target.value;
                             if (!isNaN(value)) {
                               updateForm({ expectedCommission: value });
+                            }
+                          }}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+                {/* REGULAR HOURS*/}
+                <motion.div variants={item}>
+                  <div className="sm:col-span-4">
+                    <label
+                      htmlFor="regularHours"
+                      className="block text-sm font-medium leading-6 text-slate-900"
+                    >
+                      Regular Hours
+                    </label>
+                    <div className="mt-2">
+                      <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-slate-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-400 sm:max-w-md">
+                        <input
+                          type="text"
+                          name="regularHours"
+                          id="regularHours"
+                          required
+                          className="block w-full rounded-md border-0 py-1.5 pl-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                          placeholder="Regular Hours"
+                          value={form.regularHours}
+                          onChange={(e) => {
+                            const value = e.target.value;
+                            if (!isNaN(value)) {
+                              updateForm({ regularHours: value });
+                            }
+                          }}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+                {/* BID TIME */}
+                <motion.div variants={item}>
+                  <div className="sm:col-span-4">
+                    <label
+                      htmlFor="bidTime"
+                      className="block text-sm font-medium leading-6 text-slate-900"
+                    >
+                      Bid Time
+                    </label>
+                    <div className="mt-2">
+                      <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-slate-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-400 sm:max-w-md">
+                        <input
+                          type="text"
+                          name="bidTime"
+                          id="bidTime"
+                          required
+                          className="block w-full rounded-md border-0 py-1.5 pl-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                          placeholder="Bid Time"
+                          value={form.bidTime}
+                          onChange={(e) => {
+                            const value = e.target.value;
+                            if (!isNaN(value)) {
+                              updateForm({ bidTime: value });
                             }
                           }}
                         />
