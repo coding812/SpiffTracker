@@ -203,7 +203,7 @@ export default function Record() {
                       <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-slate-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-400 sm:max-w-md">
                         <input
                           readOnly={loggedIn}
-                          type="number"
+                          type="text"
                           name="companyId"
                           id="companyId"
                           required
