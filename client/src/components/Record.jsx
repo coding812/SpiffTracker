@@ -220,7 +220,8 @@ export default function Record() {
                           required
                           className="block w-full rounded-md border-0 py-1.5 pl-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:[...]
                           placeholder="Company ID Number"
-                          value={form.companyId}
+                          {/* value={form.companyId} */}
+                          value={loggedIn && userState.user ? String(userState.user.companyId) : form.companyId}
                           onChange={(e) => updateForm({ companyId: e.target.value })}
                         />
                       </div>
