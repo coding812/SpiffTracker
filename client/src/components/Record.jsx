@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
@@ -27,6 +27,7 @@ export default function Record() {
   const userState = useSelector((state) => state.userState);
   const companyId = userState.user ? userState.user.companyId : null;
   const [loggedIn, setLoggedIn] = useState(false);
+  const inputRef = useRef(null);
 
   useEffect(() => {
     if (userState.user) {
@@ -39,6 +40,13 @@ export default function Record() {
   useEffect(() => {
     console.log("loggedIn updated:", loggedIn);
   }, [loggedIn]);
+
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.type = 'text';
+      console.log("Forced companyId input type to 'text'");  // Optional: For debugging
+    }
+  }, []);
 
   // State to hold the form data
   const [form, setForm] = useState({
@@ -213,6 +221,7 @@ export default function Record() {
                     <div className="mt-2">
                       <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-slate-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-400 sm:max-w-md">
                         <input
+                          ref={inputRef}
                           readOnly={loggedIn}
                           type="text"
                           name="companyId"
