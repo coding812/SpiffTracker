@@ -58,6 +58,13 @@ export default function Record() {
   const params = useParams();
   const navigate = useNavigate();
 
+  // Prefill form.companyId from userState.user when user logs in (store as string so letters show)
+  useEffect(() => {
+    if (userState.user && userState.user.companyId !== undefined && userState.user.companyId !== null) {
+      setForm(prev => ({ ...prev, companyId: String(userState.user.companyId) }));
+    }
+  }, [userState.user]);
+
   // Check if we are adding a new record or editing an existing one
   useEffect(() => {
     async function fetchData() {
@@ -78,7 +85,11 @@ export default function Record() {
         navigate("/");
         return;
       }
-      setForm(record);
+      // ensure companyId is a string so input displays correctly
+      setForm({
+        ...record,
+        companyId: record.companyId !== undefined && record.companyId !== null ? String(record.companyId) : ""
+      });
     }
     fetchData();
     return;
@@ -180,7 +191,7 @@ export default function Record() {
                           name="employeeName"
                           id="employeeName"
                           required
-                          className="block w-full rounded-md border-0 py-1.5 pl-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                          className="block w-full rounded-md border-0 py-1.5 pl-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:[...]
 
                           placeholder="First and Last"
                           value={form.employeeName}
@@ -207,10 +218,9 @@ export default function Record() {
                           name="companyId"
                           id="companyId"
                           required
-                          className="block w-full rounded-md border-0 py-1.5 pl-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                          className="block w-full rounded-md border-0 py-1.5 pl-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:[...]
                           placeholder="Company ID Number"
-                         
-value={loggedIn && userState.user ? userState.user.companyId : form.companyId}
+                          value={form.companyId}
                           onChange={(e) => updateForm({ companyId: e.target.value })}
                         />
                       </div>
@@ -233,7 +243,7 @@ value={loggedIn && userState.user ? userState.user.companyId : form.companyId}
                           name="dateOfSale"
                           id="dateOfSale"
                           required
-                          className="block w-full rounded-md border-0 py-1.5 pl-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                          className="block w-full rounded-md border-0 py-1.5 pl-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:[...]
                           value={form.dateOfSale}
                           onChange={(e) => updateForm({ dateOfSale: e.target.value })}
                         />
@@ -257,7 +267,7 @@ value={loggedIn && userState.user ? userState.user.companyId : form.companyId}
                           name="jobCompleted"
                           id="jobCompleted"
                           required
-                          className="block w-full rounded-md border-0 py-1.5 pl-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                          className="block w-full rounded-md border-0 py-1.5 pl-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:[...]
                           value={form.jobCompleted}
                           onChange={(e) => updateForm({ jobCompleted: e.target.value })}
                         />
@@ -281,7 +291,7 @@ value={loggedIn && userState.user ? userState.user.companyId : form.companyId}
                           name="customerName"
                           id="customerName"
                           required
-                          className="block w-full rounded-md border-0 py-1.5 pl-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                          className="block w-full rounded-md border-0 py-1.5 pl-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:[...]
                           placeholder="First and Last"
                           value={form.customerName}
                           onChange={(e) => updateForm({ customerName: e.target.value })}
@@ -306,7 +316,7 @@ value={loggedIn && userState.user ? userState.user.companyId : form.companyId}
                           name="workOrder"
                           id="workOrder"
                           required
-                          className="block w-full rounded-md border-0 py-1.5 pl-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                          className="block w-full rounded-md border-0 py-1.5 pl-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:[...]
                           placeholder="Work Order or Invoice #"
                           value={form.workOrder}
                           onChange={(e) => updateForm({ workOrder: e.target.value })}
@@ -331,7 +341,7 @@ value={loggedIn && userState.user ? userState.user.companyId : form.companyId}
                           name="saleDescription"
                           id="saleDescription"
                           required
-                          className="block w-full rounded-md border-0 py-1.5 pl-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                          className="block w-full rounded-md border-0 py-1.5 pl-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:[...]
                           placeholder=" Brief Sale Description"
                           value={form.saleDescription}
                           onChange={(e) => updateForm({ saleDescription: e.target.value })}
@@ -356,7 +366,7 @@ value={loggedIn && userState.user ? userState.user.companyId : form.companyId}
                           name="saleAmount"
                           id="saleAmount"
                           required
-                          className="block w-full rounded-md border-0 py-1.5 pl-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                          className="block w-full rounded-md border-0 py-1.5 pl-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:[...]
                           placeholder="Sale Amount"
                           value={form.saleAmount}
                           onChange={(e) => {
@@ -386,7 +396,7 @@ value={loggedIn && userState.user ? userState.user.companyId : form.companyId}
                           name="expectedCommission"
                           id="expectedCommission"
                           required
-                          className="block w-full rounded-md border-0 py-1.5 pl-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                          className="block w-full rounded-md border-0 py-1.5 pl-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:[...]
                           placeholder="Expected Commission"
                           value={form.expectedCommission}
                           onChange={(e) => {
@@ -416,7 +426,7 @@ value={loggedIn && userState.user ? userState.user.companyId : form.companyId}
                           name="regularHours"
                           id="regularHours"
                           required
-                          className="block w-full rounded-md border-0 py-1.5 pl-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                          className="block w-full rounded-md border-0 py-1.5 pl-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:[...]
                           placeholder="Regular Hours"
                           value={form.regularHours}
                           onChange={(e) => {
@@ -446,7 +456,7 @@ value={loggedIn && userState.user ? userState.user.companyId : form.companyId}
                           name="bidTime"
                           id="bidTime"
                           required
-                          className="block w-full rounded-md border-0 py-1.5 pl-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                          className="block w-full rounded-md border-0 py-1.5 pl-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:[...]
                           placeholder="Bid Time"
                           value={form.bidTime}
                           onChange={(e) => {
@@ -467,7 +477,7 @@ value={loggedIn && userState.user ? userState.user.companyId : form.companyId}
               <input
                 type="submit"
                 value="Save Sale Information"
-                className="inline-flex items-center justify-center whitespace-nowrap text-md font-medium  transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50  bg-indigo-600 hover:bg-indigo-500 text-white hover:text-accent-foreground h-9 rounded-md px-3 cursor-pointer mt-4"
+                className="inline-flex items-center justify-center whitespace-nowrap text-md font-medium  transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focu[...]
               />
             </motion.div>
           </form>
