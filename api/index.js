@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
-import records from "./server/routes/sales.js";
-import users from "./server/routes/users.js";
+import records from "../server/routes/sales.js";
+import users from "../server/routes/users.js";
 
 const PORT = process.env.PORT || "";
 const app = express();
@@ -26,6 +26,9 @@ app.get("*", (req, res) => {
 });
 
 // start the Express server
-app.listen(PORT, () => {
-  console.log(`Server listening on port ${PORT}`);
-});
+// app.listen(PORT, () => {
+//   console.log(`Server listening on port ${PORT}`);
+// });
+
+
+module.exports = app;
