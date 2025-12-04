@@ -6,9 +6,7 @@
   "main": "server.js",
   "scripts": {
     "start": "node server",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "echo 'No build step required for Express API'",
-    "vercel-build": "echo 'Server ready for deployment'"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
@@ -23,9 +21,6 @@
     "jsonwebtoken": "^9.0.2",
     "mongodb": "4.1",
     "nodemailer": "^6.9.14",
-    "nodemon": "^3.1.0",
-    "next": "latest",
-    "react": "latest",
-    "react-dom": "latest"
+    "nodemon": "^3.1.0"
   }
 }
