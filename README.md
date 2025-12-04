@@ -19,4 +19,4 @@ APP_EMAIL_PASSWORD
 NODE_ENV
 PORT
 
-Updated to work on Vercel
+Updated to work on Vercel.
